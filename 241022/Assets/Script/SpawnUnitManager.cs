@@ -49,7 +49,7 @@ public class SpawnUnitManager : MonoBehaviour
             GameManager.Instance.UseCurrency(unitList[index + 1].Cost);
             UnitInfo newUnit = Instantiate(myUnit, MyUnitSpawnPoint.position, Quaternion.identity, MyUnitSpawnPoint);
             myUnitList.Add(newUnit);
-            newUnit.SetData(unitList[index+1]);
+            newUnit.SetSpawn(unitList[index+1]);
             newUnit.gameObject.SetActive(true);
         }
         else

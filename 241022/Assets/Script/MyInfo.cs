@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -47,10 +49,9 @@ namespace Unit
             public int DEF { get; set; }
             public int HP { get; set; }
             public int Cost { get; set; }
-
             public byte UnitType { get; set; }
 
-
+            public GameObject UnitPrefabs { get; set; } 
 
             public UnitData(DataT.CSVReader.UnitData data)
             {
