@@ -24,7 +24,7 @@ public class UnitInfo : MonoBehaviour
 
 
     [SerializeField] MyInfo.eUnitState unitState = MyInfo.eUnitState.Idle;
-    bool isMyUnit = true;
+    [SerializeField] bool isMyUnit = true;
 
     void Update()
     {
@@ -109,7 +109,11 @@ public class UnitInfo : MonoBehaviour
 
     public GameObject FIndNearEnemy()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] enemies = null;
+        if (isMyUnit)
+            enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        else
+            enemies = GameObject.FindGameObjectsWithTag("Mine");
 
         if (enemies == null)
             return null;

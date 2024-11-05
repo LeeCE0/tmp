@@ -2808,6 +2808,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1070677265644414067, guid: 1cf8ee5b4329a5b49bc06acb8f419839, type: 3}
+      propertyPath: attackCT
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070677265644414067, guid: 1cf8ee5b4329a5b49bc06acb8f419839, type: 3}
+      propertyPath: attackDelay
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070677265644414067, guid: 1cf8ee5b4329a5b49bc06acb8f419839, type: 3}
+      propertyPath: attackDistance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070677265644414067, guid: 1cf8ee5b4329a5b49bc06acb8f419839, type: 3}
       propertyPath: anim.Array.size
       value: 3
       objectReference: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6950531069799406081}
   m_Layer: 5
   m_Name: EnemyUnit
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,10 +49,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  image: {fileID: 0}
   rigid: {fileID: 0}
-  animController: {fileID: 0}
+  anim: []
+  spriteRD: []
   ID: 0
   Name: 
   HP: 0
   cost: 0
+  attackDistance: 0
+  curTarget: {fileID: 0}
+  attackCT: 0
+  attackDelay: 0
+  unitState: 0
+  isMyUnit: 0
