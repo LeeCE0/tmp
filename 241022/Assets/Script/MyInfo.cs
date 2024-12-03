@@ -70,7 +70,7 @@ namespace Unit
         {
             myUnit.Clear();
 
-            //테이블 모든 유닛 데이터 가져오기
+            //테이블 모든 유닛 데이터 가져오기 : 임시, 내 유닛은 따로 설정하기
             for (int i = 0; i < DataT.CSVReader.Instance.unitList.Count; i++)
             {
                 DataT.CSVReader.UnitData tmp = DataT.CSVReader.Instance.unitList[i];

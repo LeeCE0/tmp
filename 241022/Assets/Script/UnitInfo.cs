@@ -80,6 +80,7 @@ public class UnitInfo : MonoBehaviour
                     break;
                 case MyInfo.eUnitState.Attack:
                     anim[i].SetTrigger("Attack");
+                    SetAttack();
                     break;
                 case MyInfo.eUnitState.Dead:
                     break;
@@ -131,5 +132,11 @@ public class UnitInfo : MonoBehaviour
             }
         }
         return nearestEnemy;
+    }
+
+    //유닛 타입별 공격
+    public void SetAttack()
+    {
+
     }
 }
