@@ -95,5 +95,4 @@ public class GameManager : MonoBehaviour
 
         resourceText.color = Color.white;
     }
-
 }

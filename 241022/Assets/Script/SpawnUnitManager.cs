@@ -22,9 +22,9 @@ public class SpawnUnitManager : MonoBehaviour
     [SerializeField] Transform MyUnitSpawnPoint;
     [SerializeField] Transform EnemyUnitSpawnPoint;
 
-    Dictionary<int, MyInfo.UnitData> unitList = new Dictionary<int, MyInfo.UnitData>();
-    List<UnitInfo> myUnitList = new List<UnitInfo>();
-    List<UnitInfo> enemyUnitList = new List<UnitInfo>();
+    Dictionary<int, MyInfo.UnitData> unitList = new Dictionary<int, MyInfo.UnitData>();   // 뽑을 수 있는 유닛 리스트
+    Dictionary<int, UnitInfo> myUnitList = new Dictionary<int, UnitInfo>();   // 필드에 소환되어있는 유닛
+    List<UnitInfo> enemyUnitList = new List<UnitInfo>();  //필드에 소환되어있는 적 유닛
 
 
     public void Start()
@@ -48,7 +48,14 @@ public class SpawnUnitManager : MonoBehaviour
         {
             GameManager.Instance.UseCurrency(unitList[index + 1].Cost);
             UnitInfo newUnit = Instantiate(myUnit, MyUnitSpawnPoint.position, Quaternion.identity, MyUnitSpawnPoint);
-            myUnitList.Add(newUnit);
+
+            if (myUnitList.ContainsKey(newUnit.GetUnitID()))
+            {
+
+            }
+
+
+
             newUnit.SetSpawn(unitList[index+1]);
             newUnit.gameObject.SetActive(true);
         }
@@ -58,6 +65,11 @@ public class SpawnUnitManager : MonoBehaviour
         }
     }
 
+
+    public void RemoveUnit()
+    {
+
+    }
 
 
 }

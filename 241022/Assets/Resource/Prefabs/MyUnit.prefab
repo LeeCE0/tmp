@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 443523938779945877}
   m_Layer: 6
   m_Name: MyUnit
-  m_TagString: Untagged
+  m_TagString: Mine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -263,7 +263,11 @@ MonoBehaviour:
   attackCT: 2
   attackDelay: 2
   unitState: 0
+  unitType: 0
+  weapon: {fileID: 0}
   isMyUnit: 1
+  isBullet: 0
+  isAttack: 0
 --- !u!50 &6238457518714096365
 Rigidbody2D:
   serializedVersion: 4
