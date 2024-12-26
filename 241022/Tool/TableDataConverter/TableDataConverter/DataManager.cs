@@ -118,7 +118,7 @@ namespace TableDataConverter
                 string[] headers = lines[0].Split(',');
 
                 // 테이블 데이터 클래스 정의
-                sb.AppendLine($"    public class {className}Row");
+                sb.AppendLine($"    public class {className}");
                 sb.AppendLine("    {");
                 foreach (var header in headers)
                 {
@@ -127,7 +127,7 @@ namespace TableDataConverter
                 sb.AppendLine("    }");
 
                 // 딕셔너리 생성
-                sb.AppendLine($"    public static Dictionary<int, {className}Row> {className} = new Dictionary<int, {className}Row>();");
+                sb.AppendLine($"    public static Dictionary<int, {className}> {className + "Data"} = new Dictionary<int, {className}>();");
 
                 // 데이터 추가 코드 생성
                 sb.AppendLine($"    static DataClass()");
@@ -137,11 +137,11 @@ namespace TableDataConverter
                 for (int i = 1; i < lines.Length; i++)
                 {
                     string[] row = lines[i].Split(',');
-                    sb.AppendLine($"        {className}.Add({i}, new {className}Row");
+                    sb.AppendLine($"       {className + "Data"}.Add({i}, new {className}");
                     sb.AppendLine("        {");
                     for (int j = 0; j < headers.Length; j++)
                     {
-                        sb.AppendLine($"            {headers[j]} = \"{row[j]}\"");
+                        sb.AppendLine($"            {headers[j]} = \"{row[j]}\",");
                     }
                     sb.AppendLine("        });");
                 }
