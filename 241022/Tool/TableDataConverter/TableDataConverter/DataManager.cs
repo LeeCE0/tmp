@@ -13,7 +13,6 @@ namespace TableDataConverter
         string csvPath = @"C:\Users\user\Documents\tmp\241022\Assets\TableData";
         //델리게이트
         public delegate void SendDataEventHandler(string data);
-        //private Dictionary<string/*Table Name*/, GameDataTable> gameDataTables = new Dictionary<string, GameDataTable>(StringComparer.InvariantCultureIgnoreCase);
 
         //이벤트 생성
         public event SendDataEventHandler putConsole;
@@ -99,34 +98,62 @@ namespace TableDataConverter
         public void BuildTables()
         {
             string outputPath = @"C:\Users\user\Documents\tmp\241022\Assets\TableData"; // CS 파일 저장 폴더
+            string dataClassPath = Path.Combine(outputPath, "DataClass.cs"); // 공용 CS 파일
 
-            // 출력 폴더가 없으면 생성
-            if (!Directory.Exists(outputPath))
-            {
-                Directory.CreateDirectory(outputPath);
-            }
+            StringBuilder sb = new StringBuilder();
 
+            // 공용 클래스 파일 시작
+            sb.AppendLine("using System.Collections.Generic;");
+            sb.AppendLine();
+            sb.AppendLine("public static class DataClass");
+            sb.AppendLine("{");
+
+            // CSV 파일 처리
             foreach (var file in Directory.GetFiles(csvPath, "*.csv"))
             {
-                string className = Path.GetFileNameWithoutExtension(file);
+                string className = Path.GetFileNameWithoutExtension(file); // 테이블 이름
                 string[] lines = File.ReadAllLines(file);
 
                 // 헤더 읽기
                 string[] headers = lines[0].Split(',');
 
-                // 클래스 문자열 생성
-                StringBuilder sb = new StringBuilder();
-                sb.AppendLine("public class " + className);
-                sb.AppendLine("{");
+                // 테이블 데이터 클래스 정의
+                sb.AppendLine($"    public class {className}Row");
+                sb.AppendLine("    {");
                 foreach (var header in headers)
                 {
-                    sb.AppendLine($"    public string {header} {{ get; set; }}");
+                    sb.AppendLine($"        public string {header} {{ get; set; }}");
                 }
-                sb.AppendLine("}");
+                sb.AppendLine("    }");
 
-                // CS 파일로 저장
-                File.WriteAllText(Path.Combine(outputPath, className + ".cs"), sb.ToString());
+                // 딕셔너리 생성
+                sb.AppendLine($"    public static Dictionary<int, {className}Row> {className} = new Dictionary<int, {className}Row>();");
+
+                // 데이터 추가 코드 생성
+                sb.AppendLine($"    static DataClass()");
+                sb.AppendLine("    {");
+
+                // 데이터 파싱 및 딕셔너리에 추가
+                for (int i = 1; i < lines.Length; i++)
+                {
+                    string[] row = lines[i].Split(',');
+                    sb.AppendLine($"        {className}.Add({i}, new {className}Row");
+                    sb.AppendLine("        {");
+                    for (int j = 0; j < headers.Length; j++)
+                    {
+                        sb.AppendLine($"            {headers[j]} = \"{row[j]}\"");
+                    }
+                    sb.AppendLine("        });");
+                }
+
+                sb.AppendLine("    }");
+                sb.AppendLine();
             }
+
+            // 공용 클래스 파일 끝
+            sb.AppendLine("}");
+
+            File.WriteAllText(dataClassPath, sb.ToString());
         }
     }
 }
