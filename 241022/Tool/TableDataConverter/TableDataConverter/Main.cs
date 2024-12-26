@@ -15,8 +15,8 @@ namespace TableDataConverter
     {
         Form1 mainForm;
         private DataManager dataManager;
-        string csvPath = "";
-        string excelPath = "";
+        string csvPath = @"C:\Users\user\Documents\tmp\241022\Assets\TableData";
+        string excelPath = @"C:\Users\user\Documents\tmp\241022\Assets\TableData";
 
         public Main(Form1 form)
         {
@@ -33,17 +33,9 @@ namespace TableDataConverter
                 throw new Exception("엑셀 폴더를 찾을 수 없습니다.");
             }
 
-            var excelFiles = excelDirectory.EnumerateFiles("*.*", SearchOption.AllDirectories).Where(f => Config.ExcelFileList.Contains(f.Name));
-            if (excelFiles.Count() <= 0)
-            {
-                throw new Exception("해당 폴더에 엑셀 파일을 찾을 수 없습니다.");
-            }
-
-            var file = excelDirectory.GetFiles(excelPath, SearchOption.AllDirectories).First();
-            if (null != file)
-            {
-                excelFiles = excelFiles.Append(file);
-            }
+            var excelFiles = excelDirectory.EnumerateFiles()
+                               .Where(file => file.Extension == ".xls" || file.Extension == ".xlsx")
+                               .ToArray();
 
             Dictionary<string/*excelFileName*/, DataSet> excelDatas = new Dictionary<string, DataSet>();
 
@@ -75,39 +67,23 @@ namespace TableDataConverter
 
                 dataManager.Init();
 
-                mainForm.PutConsole("Config CSV 생성중...");
-                foreach (var excelData in excelDatas)
-                {
-                    var retPath = excelData.Key;
-                    //dataManager.MakeCSVDataConfig(excelData.Key, excelData.Value);
-                }
-                mainForm.PutConsole("Config CSV 생성 완료.");
-
-                mainForm.PutConsole("Enum CSV 생성 중...");
-                foreach (var excelData in excelDatas)
-                {
-                    //dataManager.MakeCSVEnumSheet(excelData.Key, excelData.Value);
-                }
-                mainForm.PutConsole("Enum CSV 생성 완료.");
-
-                //if (null != Config.ConstantTable)
-                //{
-                //    mainForm.PutConsole(string.Format("ConstantTable({0}) CSV 생성 중...", Config.ConstantTable.Excel));
-
-                //    dataManager.MakeConstantTable(Config.ConstantTable.Excel, Config.ConstantTable.Sheet, excelDatas[Config.ConstantTable.Excel], Config.Zone, Config.Version);
-
-                //    mainForm.PutConsole(string.Format("ConstantTable({0}) CSV 생성 완료.", Config.ConstantTable.Excel));
-                //}
-
                 mainForm.PutConsole("Data Sheet 생성 중...");
                 foreach (var excelData in excelDatas)
                 {
-                    //dataManager.MakeCSVDataSheet(excelData.Key, excelData.Value, Config.Zone, Config.Version);
+                    dataManager.MakeCSVDataSheet(excelData.Key, excelData.Value);
                 }
                 mainForm.PutConsole("Data CSV 생성 완료.");
+
+
+                mainForm.PutConsole("CS 생성 중");
+                dataManager.BuildTables();
+
+                mainForm.PutConsole("CS 생성 완료");
             });
 
             mainForm.PutConsole("DataBuild Execute Success!");
+
+
         }
     }
 }

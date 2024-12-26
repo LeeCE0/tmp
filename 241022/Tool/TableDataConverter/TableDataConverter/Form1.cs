@@ -14,9 +14,39 @@ namespace TableDataConverter
     public partial class Form1 : Form
     {
         private TextBox m_textBox_console = null;
+        private Button convertBtn = null;
         public Form1()
         {
             InitializeComponent();
+            var info = new System.IO.FileInfo(Application.ExecutablePath);
+            string buildTime = info.CreationTime.ToString();
+            //this.Text = this.Text + " (Build:" + buildTime + ")";
+
+            if ((m_textBox_console = (TextBox)FindControl(this, "textBox_console")) != null)
+            {
+
+            }           
+        }
+        Control FindControl(Control hParent, string stName)
+        {
+            foreach (Control cControl in hParent.Controls)
+            {
+                if (cControl.HasChildren)
+                {
+                    Control cFindControl = FindControl(cControl, stName);
+
+                    if (cFindControl != null)
+                    {
+                        return cFindControl;
+                    }
+                }
+
+                if (cControl.Name == stName)
+                {
+                    return cControl;
+                }
+            }
+            return null;
         }
 
         //로그출력
