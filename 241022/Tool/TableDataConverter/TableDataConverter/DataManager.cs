@@ -102,39 +102,33 @@ namespace TableDataConverter
 
             StringBuilder sb = new StringBuilder();
 
-            // 공용 클래스 파일 시작
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine();
             sb.AppendLine("public static class DataClass");
             sb.AppendLine("{");
-
-            // CSV 파일 처리
+            
             foreach (var file in Directory.GetFiles(csvPath, "*.csv"))
             {
-                string className = Path.GetFileNameWithoutExtension(file); // 테이블 이름
+                string className = Path.GetFileNameWithoutExtension(file);
                 string[] lines = File.ReadAllLines(file);
 
-                // 헤더 읽기
                 string[] headers = lines[0].Split(',');
+                var types = lines[1].Split(',');
 
-                // 테이블 데이터 클래스 정의
                 sb.AppendLine($"    public class {className}");
                 sb.AppendLine("    {");
-                foreach (var header in headers)
+                for (int i = 0; i < headers.Length; i++)
                 {
-                    sb.AppendLine($"        public string {header} {{ get; set; }}");
+                    string header = headers[i].Trim(); 
+                    string type = types[i].Trim();
+                    sb.AppendLine($"        public {type} {header} {{ get; set; }}");
                 }
                 sb.AppendLine("    }");
-
-                // 딕셔너리 생성
                 sb.AppendLine($"    public static Dictionary<int, {className}> {className + "Data"} = new Dictionary<int, {className}>();");
-
-                // 데이터 추가 코드 생성
                 sb.AppendLine($"    static DataClass()");
                 sb.AppendLine("    {");
 
-                // 데이터 파싱 및 딕셔너리에 추가
-                for (int i = 1; i < lines.Length; i++)
+                for (int i = 2; i < lines.Length; i++)
                 {
                     string[] row = lines[i].Split(',');
                     sb.AppendLine($"       {className + "Data"}.Add({i}, new {className}");
@@ -149,8 +143,6 @@ namespace TableDataConverter
                 sb.AppendLine("    }");
                 sb.AppendLine();
             }
-
-            // 공용 클래스 파일 끝
             sb.AppendLine("}");
 
             File.WriteAllText(dataClassPath, sb.ToString());
