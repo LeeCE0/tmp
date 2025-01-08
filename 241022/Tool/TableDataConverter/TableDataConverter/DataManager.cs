@@ -131,11 +131,25 @@ namespace TableDataConverter
                 for (int i = 2; i < lines.Length; i++)
                 {
                     string[] row = lines[i].Split(',');
+
                     sb.AppendLine($"       {className + "Data"}.Add({i}, new {className}");
                     sb.AppendLine("        {");
                     for (int j = 0; j < headers.Length; j++)
                     {
-                        sb.AppendLine($"            {headers[j]} = \"{row[j]}\",");
+                        string value = row[j].Trim();
+
+                        if (int.TryParse(value, out int intValue))
+                        {
+                            sb.AppendLine($"            {headers[j]} = {intValue},");
+                        }
+                        else if (double.TryParse(value, out double doubleValue))
+                        {
+                            sb.AppendLine($"            {headers[j]} = {doubleValue},");
+                        }
+                        else
+                        {
+                            sb.AppendLine($"            {headers[j]} = \"{value}\",");
+                        }
                     }
                     sb.AppendLine("        });");
                 }
