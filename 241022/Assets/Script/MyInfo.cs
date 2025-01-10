@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
+using static DataClass;
 
 
 namespace Unit
@@ -53,7 +54,12 @@ namespace Unit
 
             public GameObject UnitPrefabs { get; set; } 
 
-            public UnitData(DataT.CSVReader.UnitData data)
+
+            public UnitData(int key, int speed, string name, int atk, int def, int HP)
+            {
+
+            }
+            public UnitData(UnitData data)
             {
                 UnitID = data.UnitID;
                 UnitSpeed = data.UnitSpeed;
@@ -71,12 +77,14 @@ namespace Unit
             myUnit.Clear();
 
             //테이블 모든 유닛 데이터 가져오기 : 임시, 내 유닛은 따로 설정하기
-            for (int i = 0; i < DataT.CSVReader.Instance.unitList.Count; i++)
+            foreach(var item in UnitTable_Sheet1Data)
             {
-                DataT.CSVReader.UnitData tmp = DataT.CSVReader.Instance.unitList[i];
-                if (!myUnit.ContainsKey(DataT.CSVReader.Instance.unitList[i].UnitID))
-                    myUnit.Add(DataT.CSVReader.Instance.unitList[i].UnitID, new UnitData(tmp));
+                if (!myUnit.ContainsKey(item.Key))
+                    myUnit.Add(item.Key, new UnitData(item.Key, item.Value.UnitSpeed, item.Value.UnitName, item.Value.ATK, item.Value.DEF, item.Value.HP));
             }
+
+
+
 
             SpawnUnitManager.Instance.SetData();
         }
