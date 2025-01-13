@@ -128,27 +128,31 @@ namespace TableDataConverter
                 sb.AppendLine($"    static DataClass()");
                 sb.AppendLine("    {");
 
+                string[] dataTypes = lines[1].Split(',');
+
                 for (int i = 2; i < lines.Length; i++)
                 {
                     string[] row = lines[i].Split(',');
 
-                    sb.AppendLine($"       {className + "Data"}.Add({i}, new {className}");
+                    sb.AppendLine($"       {className + "Data"}.Add({i - 1}, new {className}");
                     sb.AppendLine("        {");
                     for (int j = 0; j < headers.Length; j++)
                     {
                         string value = row[j].Trim();
 
-                        if (int.TryParse(value, out int intValue))
+                        switch (dataTypes[j].Trim().ToLower()) 
                         {
-                            sb.AppendLine($"            {headers[j]} = {intValue},");
-                        }
-                        else if (double.TryParse(value, out double doubleValue))
-                        {
-                            sb.AppendLine($"            {headers[j]} = {doubleValue},");
-                        }
-                        else
-                        {
-                            sb.AppendLine($"            {headers[j]} = \"{value}\",");
+                            case "int":
+                                sb.AppendLine($"            {headers[j]} = {value},");
+                                break;
+                            case "float":
+                                sb.AppendLine($"            {headers[j]} = {value}f,");
+                                break;
+                            case "string":
+                                sb.AppendLine($"            {headers[j]} = \"{value}\",");
+                                break;
+                            default:
+                                throw new Exception($"Unsupported data type: {dataTypes[j]}");
                         }
                     }
                     sb.AppendLine("        });");

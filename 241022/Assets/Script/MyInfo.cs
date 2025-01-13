@@ -55,9 +55,14 @@ namespace Unit
             public GameObject UnitPrefabs { get; set; } 
 
 
-            public UnitData(int key, int speed, string name, int atk, int def, int HP)
+            public UnitData(int key, int speed, string name, int atk, int def, int hp)
             {
-
+                UnitID = key;
+                UnitSpeed = speed;
+                UnitName = name;
+                ATK = atk;
+                DEF = def;
+                HP = hp;
             }
             public UnitData(UnitData data)
             {
@@ -82,9 +87,6 @@ namespace Unit
                 if (!myUnit.ContainsKey(item.Key))
                     myUnit.Add(item.Key, new UnitData(item.Key, item.Value.UnitSpeed, item.Value.UnitName, item.Value.ATK, item.Value.DEF, item.Value.HP));
             }
-
-
-
 
             SpawnUnitManager.Instance.SetData();
         }
