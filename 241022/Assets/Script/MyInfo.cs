@@ -44,7 +44,7 @@ namespace Unit
         public class UnitData
         {
             public int UnitID { get; set; }
-            public int UnitSpeed { get; set; }
+            public float UnitSpeed { get; set; }
             public string UnitName { get; set; }
             public int ATK { get; set; }
             public int DEF { get; set; }
@@ -55,7 +55,7 @@ namespace Unit
             public GameObject UnitPrefabs { get; set; } 
 
 
-            public UnitData(int key, int speed, string name, int atk, int def, int hp)
+            public UnitData(int key, float speed, string name, int atk, int def, int hp)
             {
                 UnitID = key;
                 UnitSpeed = speed;
