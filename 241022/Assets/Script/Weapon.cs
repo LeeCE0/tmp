@@ -147,15 +147,23 @@ public class Weapon : MonoBehaviour
     //공격 모드
     public void StartAttack()
     {
+        isAttack = true;
+
 
     }
     //공격 중지
     public void StopAttack() 
-    { 
-    
-    
+    {
+        isAttack = false;
+
+
+
     }
 
+    public void PoolingBullet()
+    {
+
+    }
 
 
 
