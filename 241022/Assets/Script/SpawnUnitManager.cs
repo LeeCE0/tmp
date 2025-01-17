@@ -2,6 +2,7 @@ using Unit;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SpawnUnitManager : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class SpawnUnitManager : MonoBehaviour
     [SerializeField] Transform EnemyUnitSpawnPoint;
 
     Dictionary<int, MyInfo.UnitData> unitList = new Dictionary<int, MyInfo.UnitData>();   // 뽑을 수 있는 유닛 리스트
-    Dictionary<int, UnitInfo> myUnitList = new Dictionary<int, UnitInfo>();   // 필드에 소환되어있는 유닛
+    List<UnitInfo> myUnitList = new List<UnitInfo>();   // 필드에 소환되어있는 유닛
     List<UnitInfo> enemyUnitList = new List<UnitInfo>();  //필드에 소환되어있는 적 유닛
 
 
@@ -47,16 +48,11 @@ public class SpawnUnitManager : MonoBehaviour
         if (GameManager.Instance.IsEnoughCurrency(unitList[index + 1].Cost))
         {
             GameManager.Instance.UseCurrency(unitList[index + 1].Cost);
-            UnitInfo newUnit = Instantiate(myUnit, MyUnitSpawnPoint.position, Quaternion.identity, MyUnitSpawnPoint);
-
-            if (myUnitList.ContainsKey(newUnit.GetUnitID()))
-            {
-
-            }
-
-
+            GameObject item = ObjectPoolManager.Instance.GetObjPool("Unit", MyUnitSpawnPoint.position, Quaternion.identity);
+            UnitInfo newUnit = item.GetComponent<UnitInfo>();
 
             newUnit.SetSpawn(unitList[index + 1]);
+            myUnitList.Add(newUnit);
             newUnit.gameObject.SetActive(true);
         }
         else
