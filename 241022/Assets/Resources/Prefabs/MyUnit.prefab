@@ -246,10 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   rigid: {fileID: 6238457518714096365}
-  anim:
-  - {fileID: 443523938779945877}
-  - {fileID: 7440142508741372923}
-  - {fileID: 5831359838681059817}
+  anim: []
   spriteRD:
   - {fileID: 7746660522299293920}
   - {fileID: 7731593558163106422}
