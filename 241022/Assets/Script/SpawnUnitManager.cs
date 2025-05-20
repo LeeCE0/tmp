@@ -62,9 +62,9 @@ public class SpawnUnitManager : MonoBehaviour
     }
 
 
-    public void RemoveUnit()
+    public void RemoveUnit(int UnitID)
     {
-
+        var rmUnit = myUnitList.Find(x => x.GetUnitID() == UnitID);
     }
 
 
