@@ -67,7 +67,7 @@ public class ObjectPoolManager : MonoBehaviour
     }
 
 
-    public GameObject GetObjPool(string tag, Vector3 position, Quaternion rotation)
+    public GameObject GetObjPool(string tag, GameObject parent, Quaternion rotation)
     {
         if (!poolDictionary.ContainsKey(tag))
         {
@@ -80,8 +80,9 @@ public class ObjectPoolManager : MonoBehaviour
             : Instantiate(pools.Find(x => x.tag == tag).prefab);
 
         poolOBJ.SetActive(true);
-        poolOBJ.transform.position = position;
+        poolOBJ.transform.position = parent.transform.position;
         poolOBJ.transform.rotation = rotation;
+        poolOBJ.transform.parent = parent.transform;
 
         return poolOBJ;
     }

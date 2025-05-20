@@ -20,8 +20,8 @@ public class SpawnUnitManager : MonoBehaviour
     [SerializeField] UnitSlot[] unitBtn;
     [SerializeField] UnitInfo myUnit;
     [SerializeField] UnitInfo enemyUnit;
-    [SerializeField] Transform MyUnitSpawnPoint;
-    [SerializeField] Transform EnemyUnitSpawnPoint;
+    [SerializeField] GameObject MyUnitSpawnPoint;
+    [SerializeField] GameObject EnemyUnitSpawnPoint;
 
     Dictionary<int, MyInfo.UnitData> unitList = new Dictionary<int, MyInfo.UnitData>();   // 뽑을 수 있는 유닛 리스트
     List<UnitInfo> myUnitList = new List<UnitInfo>();   // 필드에 소환되어있는 유닛
@@ -48,7 +48,7 @@ public class SpawnUnitManager : MonoBehaviour
         if (GameManager.Instance.IsEnoughCurrency(unitList[index + 1].Cost))
         {
             GameManager.Instance.UseCurrency(unitList[index + 1].Cost);
-            GameObject item = ObjectPoolManager.Instance.GetObjPool("Unit", MyUnitSpawnPoint.position, Quaternion.identity);
+            GameObject item = ObjectPoolManager.Instance.GetObjPool("Unit", MyUnitSpawnPoint, Quaternion.identity);
             UnitInfo newUnit = item.GetComponent<UnitInfo>();
 
             newUnit.SetSpawn(unitList[index + 1]);

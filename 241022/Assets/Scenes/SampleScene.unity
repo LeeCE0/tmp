@@ -2676,7 +2676,6 @@ GameObject:
   - component: {fileID: 2113644786}
   - component: {fileID: 2113644785}
   - component: {fileID: 2113644789}
-  - component: {fileID: 2113644788}
   - component: {fileID: 2113644790}
   - component: {fileID: 2113644791}
   m_Layer: 0
@@ -2722,8 +2721,8 @@ MonoBehaviour:
   - {fileID: 661521453}
   myUnit: {fileID: 0}
   enemyUnit: {fileID: 967094363}
-  MyUnitSpawnPoint: {fileID: 943834638}
-  EnemyUnitSpawnPoint: {fileID: 904829330}
+  MyUnitSpawnPoint: {fileID: 943834637}
+  EnemyUnitSpawnPoint: {fileID: 904829329}
 --- !u!4 &2113644787
 Transform:
   m_ObjectHideFlags: 0
@@ -2739,18 +2738,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2113644788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113644784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 286d786a3e2ada542ad2f1d1f1039b4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2113644789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2805,6 +2792,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 904829330}
     m_Modifications:
+    - target: {fileID: 7113028717581414314, guid: 82c48a3833f1a3d4aad37c6c4fc5f85e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ac4cd26cf6f3540e193a8c12310f5882, type: 3}
     - target: {fileID: 7874422153606026767, guid: 82c48a3833f1a3d4aad37c6c4fc5f85e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2836,6 +2827,18 @@ PrefabInstance:
     - target: {fileID: 7874422153606026767, guid: 82c48a3833f1a3d4aad37c6c4fc5f85e, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 7874422153606026767, guid: 82c48a3833f1a3d4aad37c6c4fc5f85e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7874422153606026767, guid: 82c48a3833f1a3d4aad37c6c4fc5f85e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7874422153606026767, guid: 82c48a3833f1a3d4aad37c6c4fc5f85e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7874422153606026767, guid: 82c48a3833f1a3d4aad37c6c4fc5f85e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2888,6 +2891,10 @@ PrefabInstance:
     - target: {fileID: 8684076265977748421, guid: 82c48a3833f1a3d4aad37c6c4fc5f85e, type: 3}
       propertyPath: m_Name
       value: EnemyUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073951650915581056, guid: 82c48a3833f1a3d4aad37c6c4fc5f85e, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -26,6 +26,7 @@ public class UnitInfo : MonoBehaviour
 
     [SerializeField] MyInfo.eUnitState unitState = MyInfo.eUnitState.Idle;
     [SerializeField] MyInfo.eUnitType unitType = MyInfo.eUnitType.Swordsman;
+    [SerializeField] Weapon.eWeaponType weaponType = Weapon.eWeaponType.Sword;
     [SerializeField] Weapon weapon;
     [SerializeField] bool isMyUnit = true;
 
@@ -81,16 +82,10 @@ public class UnitInfo : MonoBehaviour
         moveSpeed = data.UnitSpeed;
         curTarget = null;
 
-        SetAnimationData(data);
-
         SetState(MyInfo.eUnitState.Walk);
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Abs(scale.x) * (isMyUnit ? -1 : 1);
         transform.localScale = scale;
-    }
-
-    public void SetAnimationData(MyInfo.UnitData data)
-    {
     }
 
     public void SetState(MyInfo.eUnitState state)
@@ -204,8 +199,8 @@ public class UnitInfo : MonoBehaviour
     private void PerformAttack()
     {
         if (curTarget == null) return;
-        Weapon ob = Instantiate(weapon.gameObject).GetComponent<Weapon>();
-        weapon.Launch(weapon.transform.position, curTarget.transform.position, Weapon.eWeaponType.Boom);
+        weapon.SetWeapon(unitType);
+        weapon.StartAttack();
     }
 
     private GameObject FindNearestEnemy()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using Unit;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -8,12 +9,10 @@ public class Weapon : MonoBehaviour
     public enum eWeaponType
     {
         None = 0,
-        GunBullet = 1,
-        Boom = 2,
-        Arrow = 3, 
-        Hammer,
-        Scyth,
-        Sword,
+        Sword = 1,
+        Bow = 2,
+        Magic = 3, 
+        Ax,
     }
     [SerializeField] GameObject bulletOBJ;
     public eWeaponType weaponType = eWeaponType.None; // 무기 타입
@@ -24,73 +23,18 @@ public class Weapon : MonoBehaviour
     public bool isMeeleeType = false;
     private bool isRunning = false;
     public bool isAttack = false;
-
-    #region old
-    public void Launch(Vector2 start, Vector2 target, eWeaponType weapon)
+     
+    
+    //원거리 (화살)
+    public void Launch(Vector2 start, Vector2 target)
     {
-        //근거리 무기 날라가면 안됨
-        if (isMeeleeType)
-            return;
         startPosition = start;
         targetPosition = target;
         transform.position = start;
-        weaponType = weapon;
         if (!isRunning)
         {
             isRunning = true;
-            StartCoroutine(MoveBullet());
-        }
-    }
-
-    private IEnumerator MoveBullet()
-    {
-        switch (weaponType)
-        {
-            case eWeaponType.GunBullet:
-                yield return StartCoroutine(MoveStraight());
-                break;
-
-            case eWeaponType.Boom:
-                yield return StartCoroutine(MoveParabola());
-                break;
-
-            case eWeaponType.Arrow:
-                yield return StartCoroutine(MoveStraightWithCurve());
-                break;
-
-            default:
-                Debug.LogWarning("Invalid bullet type");
-                break;
-        }
-
-        Explode();
-    }
-
-    private IEnumerator MoveStraight()
-    {
-        while ((Vector2)transform.position != targetPosition)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-            yield return null;
-        }
-    }
-
-    private IEnumerator MoveParabola()
-    {
-        float elapsedTime = 0f;
-        float duration = Vector2.Distance(startPosition, targetPosition) / speed; 
-        while (elapsedTime < duration)
-
-        {
-            elapsedTime += Time.deltaTime;
-
-            float t = elapsedTime / duration;
-
-            float x = Mathf.Lerp(startPosition.x, targetPosition.x, t);
-            float y = Mathf.Lerp(startPosition.y, targetPosition.y, t) + arcHeight * Mathf.Sin(Mathf.PI * t);
-
-            transform.position = new Vector2(x, y);
-            yield return null;
+            StartCoroutine(MoveStraightWithCurve());
         }
     }
 
@@ -108,6 +52,9 @@ public class Weapon : MonoBehaviour
 
             yield return null;
         }
+
+
+        Explode();
     }
 
     private void Explode()
@@ -115,31 +62,32 @@ public class Weapon : MonoBehaviour
         Debug.Log($"{weaponType} 이동 완료: 폭발!");
         Destroy(gameObject);
     }
-    #endregion
 
-    #region new
+    //원거리 (마법)
+
+
+    //근거리
+    private void AttackSword()
+    {
+
+    }
 
     //유닛 무기 정보 설정하기
-    public void SetWeapon(eWeaponType type)
+    public void SetWeapon(MyInfo.eUnitType unitType)
     {
-        weaponType = type;
-        isMeeleeType = false;
-        switch (weaponType)
+        switch (unitType)
         {
-            case eWeaponType.GunBullet:
+            case MyInfo.eUnitType.Swordsman:
+                weaponType = eWeaponType.Sword;
                 break;
-            case eWeaponType.Boom:
+            case MyInfo.eUnitType.Bower:
+                weaponType = eWeaponType.Bow;
                 break;
-            case eWeaponType.Arrow:
+            case MyInfo.eUnitType.Magician:
+                weaponType = eWeaponType.Magic;
                 break;
-            case eWeaponType.Hammer:
-                isMeeleeType = true;
-                break;
-            case eWeaponType.Scyth:
-                isMeeleeType = true;
-                break;
-            case eWeaponType.Sword:
-                isMeeleeType = true;
+            case MyInfo.eUnitType.Barbarian:
+                weaponType = eWeaponType.Ax;
                 break;
         }
     }
@@ -148,25 +96,16 @@ public class Weapon : MonoBehaviour
     public void StartAttack()
     {
         isAttack = true;
-
-
+        AttackSword();
     }
     //공격 중지
     public void StopAttack() 
     {
         isAttack = false;
-
-
-
     }
 
     public void PoolingBullet()
     {
 
     }
-
-
-
-    #endregion
-
 }
