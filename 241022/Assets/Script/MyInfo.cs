@@ -59,7 +59,7 @@ namespace Unit
             public GameObject UnitPrefabs { get; set; } 
 
 
-            public UnitData(int key, float speed, string name, int atk, int def, int hp, string bodyPath, string armPath, string weaponPath = null, string bulletPath = null)
+            public UnitData(int key, float speed, string name, int atk, int def, int hp, int cost)
             {
                 UnitID = key;
                 UnitSpeed = speed;
@@ -67,10 +67,7 @@ namespace Unit
                 ATK = atk;
                 DEF = def;
                 HP = hp;
-                if (!string.IsNullOrWhiteSpace(bodyPath)) bodyController = Resources.Load<RuntimeAnimatorController>(bodyPath);
-                if (!string.IsNullOrWhiteSpace(armPath)) armController = Resources.Load<RuntimeAnimatorController>(armPath);
-                if (!string.IsNullOrWhiteSpace(weaponPath)) weaponController = Resources.Load<RuntimeAnimatorController>(weaponPath);
-                if(!string.IsNullOrWhiteSpace(bulletPath)) bulletController = Resources.Load<RuntimeAnimatorController>(bulletPath);
+                Cost = cost;
             }
             public UnitData(UnitData data)
             {
@@ -82,10 +79,6 @@ namespace Unit
                 HP = data.HP;
                 Cost = data.Cost;
                 UnitType = data.UnitType;
-                bodyController = data.bodyController;
-                armController = data.armController;
-                weaponController = data.weaponController;
-                bulletController = data.bulletController;
             }
         } 
 
@@ -99,7 +92,7 @@ namespace Unit
                 if (!myUnit.ContainsKey(item.Key))
                     myUnit.Add(item.Key, 
                         new UnitData
-                        (item.Key, item.Value.UnitSpeed, item.Value.UnitName, item.Value.ATK, item.Value.DEF, item.Value.HP, item.Value.AnimPath_Body, item.Value.AnimPath_Arm, item.Value.AnimPath_Weapon, item.Value.AnimPath_Bullet));
+                        (item.Key, item.Value.UnitSpeed, item.Value.UnitName, item.Value.ATK, item.Value.DEF, item.Value.HP, item.Value.Cost));
             }
 
             SpawnUnitManager.Instance.SetData();

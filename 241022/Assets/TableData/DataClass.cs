@@ -9,14 +9,7 @@ public static class DataClass
         public int ATK { get; set; }
         public int DEF { get; set; }
         public int HP { get; set; }
-        public string AnimPath_Body { get; set; }
-        public string AnimPath_Arm { get; set; }
-        public string AnimPath_Weapon { get; set; }
-        public string AnimPath_Bullet { get; set; }
-        public string Sprite_Body { get; set; }
-        public string Sprite_Arm { get; set; }
-        public string Sprite_Weapon { get; set; }
-        public string Sprite_Bullet { get; set; }
+        public int Cost { get; set; }
     }
     public static Dictionary<int, UnitTable_UnitDataT> UnitTable_UnitDataTData = new Dictionary<int, UnitTable_UnitDataT>();
     static DataClass()
@@ -28,14 +21,7 @@ public static class DataClass
             ATK = 3,
             DEF = 2,
             HP = 10,
-            AnimPath_Body = "Animations/Boomer",
-            AnimPath_Arm = "Boomer/Animation/bomb_hold_side-overlay",
-            AnimPath_Weapon = "",
-            AnimPath_Bullet = "Boomer/Animation/bomb",
-            Sprite_Body = "Boomer/Sprite/",
-            Sprite_Arm = "",
-            Sprite_Weapon = "",
-            Sprite_Bullet = "",
+            Cost = 20,
         });
        UnitTable_UnitDataTData.Add(2, new UnitTable_UnitDataT
         {
@@ -44,14 +30,7 @@ public static class DataClass
             ATK = 1,
             DEF = 3,
             HP = 20,
-            AnimPath_Body = "Animations/Hammer",
-            AnimPath_Arm = "Hammer/Animation/hammer_attack_side-overlay",
-            AnimPath_Weapon = "",
-            AnimPath_Bullet = "",
-            Sprite_Body = "",
-            Sprite_Arm = "",
-            Sprite_Weapon = "",
-            Sprite_Bullet = "",
+            Cost = 40,
         });
        UnitTable_UnitDataTData.Add(3, new UnitTable_UnitDataT
         {
@@ -60,14 +39,7 @@ public static class DataClass
             ATK = 5,
             DEF = 1,
             HP = 8,
-            AnimPath_Body = "",
-            AnimPath_Arm = "",
-            AnimPath_Weapon = "",
-            AnimPath_Bullet = "",
-            Sprite_Body = "",
-            Sprite_Arm = "",
-            Sprite_Weapon = "",
-            Sprite_Bullet = "",
+            Cost = 80,
         });
     }
 
