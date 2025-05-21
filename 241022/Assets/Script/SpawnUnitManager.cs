@@ -27,8 +27,8 @@ public class SpawnUnitManager : MonoBehaviour
     [SerializeField] GameObject EnemyUnitSpawnPoint;
 
     Dictionary<int, MyInfo.UnitData> unitList = new Dictionary<int, MyInfo.UnitData>();   // 뽑을 수 있는 유닛 리스트
-    List<UnitInfo> myUnitList = new List<UnitInfo>();   // 필드에 소환되어있는 유닛
-    List<UnitInfo> enemyUnitList = new List<UnitInfo>();  //필드에 소환되어있는 적 유닛
+    public List<UnitInfo> myUnitList = new List<UnitInfo>();   // 필드에 소환되어있는 유닛
+    public List<UnitInfo> enemyUnitList = new List<UnitInfo>();  //필드에 소환되어있는 적 유닛
 
 
     public void Start()
@@ -86,11 +86,18 @@ public class SpawnUnitManager : MonoBehaviour
         UnitInfo newUnit = unit.GetComponent<UnitInfo>();
 
         newUnit.SetSpawn(GetRandomUnitData());
+        enemyUnitList.Add(newUnit);
 
         unit.transform.position = EnemyUnitSpawnPoint.transform.position;
         unit.transform.rotation = Quaternion.identity;
 
     }
+
+    public void DeadUnitToPool()
+    {
+
+    }
+
 
     private MyInfo.UnitData GetRandomUnitData()
     {

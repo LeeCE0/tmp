@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using System;
 using UnityEngine.UIElements;
 using UnityEngine.SocialPlatforms;
+using static UnityEngine.UI.CanvasScaler;
 
 public class UnitInfo : MonoBehaviour
 {
@@ -29,12 +30,14 @@ public class UnitInfo : MonoBehaviour
     public float attackDistance;
     public float attackCT = 3;
     public float attackDelay;
+    public int ATK;
 
-    public GameObject curTarget;
+    public UnitInfo curTarget;
     public bool isMyUnit = true;
     public bool isBullet = false;
-    public bool isAttack = false;   
+    public bool isAttack = false;
 
+    public int curHP;
 
     public int GetUnitID() { return ID; }
 
@@ -70,11 +73,12 @@ public class UnitInfo : MonoBehaviour
         curTarget = null;
         attackDelay = 0f;
         isAttack = false;
-
+        curHP = data.HP;
+        ATK = data.ATK;
         anim.Rebind();       
         anim.Update(0f);
 
-        ChangeState(new WalkState(this));
+        ChangeState(walkState);
     }   
 
     public void SetSpawn(MyInfo.UnitData data)
@@ -84,8 +88,10 @@ public class UnitInfo : MonoBehaviour
         attackDistance = data.AttackDistance;
         attackCT = 2f;
         curTarget = null;
+        curHP = data.HP;
+        ATK = data.ATK;
 
-       ChangeState(new WalkState(this));
+        ChangeState(walkState);
 
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Abs(scale.x) * (isMyUnit ? -1 : 1);
@@ -94,14 +100,14 @@ public class UnitInfo : MonoBehaviour
     public float DistanceToTarget() =>
       curTarget == null ? float.MaxValue : Vector2.Distance(transform.position, curTarget.transform.position);
 
-    public GameObject FindNearestEnemy()
+    public UnitInfo FindNearestEnemy()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(isMyUnit ? "Enemy" : "Mine");
-        if (enemies == null || enemies.Length == 0) return null;
+        List<UnitInfo> enemies = isMyUnit ? SpawnUnitManager.Instance.enemyUnitList : SpawnUnitManager.Instance.myUnitList;
+        if (enemies == null || enemies.Count == 0) return null;
 
-        GameObject nearest = null;
+        UnitInfo nearest = null;
 
-        foreach (GameObject enemy in enemies)
+        foreach (UnitInfo enemy in enemies)
         {
             float distance = Vector2.Distance(transform.position, enemy.transform.position);
             if (distance < attackDistance)
@@ -111,4 +117,22 @@ public class UnitInfo : MonoBehaviour
         }
         return nearest;
     }
+
+    public void TakeDMG(int dmg)
+    {
+        if (curHP <= 0) return;
+        curHP -= dmg;
+        //hpBar.SetFill((float)currentHP / maxHP);
+        //ShowDamageText(damage);
+
+        if (curHP <= 0)
+            ChangeState(deadState);
+    }
+
+    public void Deactivate()
+    {
+        string tag = isMyUnit ? "MyUnit" : "Enemy";
+        ObjectPoolManager.Instance.ReturnToPool(tag, gameObject);
+    }
 }
+

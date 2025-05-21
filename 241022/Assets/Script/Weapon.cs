@@ -67,9 +67,9 @@ public class Weapon : MonoBehaviour
 
 
     //근거리
-    private void AttackSword()
+    private void AttackSword(int dmg, UnitInfo target)
     {
-
+        target.TakeDMG(dmg);
     }
 
     //유닛 무기 정보 설정하기
@@ -93,10 +93,10 @@ public class Weapon : MonoBehaviour
     }
 
     //공격 모드
-    public void StartAttack()
+    public void StartAttack(int dmg, UnitInfo target)
     {
         isAttack = true;
-        AttackSword();
+        AttackSword(dmg, target);
     }
     //공격 중지
     public void StopAttack() 

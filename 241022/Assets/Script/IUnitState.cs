@@ -35,7 +35,11 @@ public class WalkState : IUnitState
 
         if (unit.curTarget != null)
         {
-            Debug.LogError("Find Enemy");
+            if(!unit.FindNearestEnemy().isActiveAndEnabled)
+            {
+                unit.curTarget = null;
+                return;
+            }
             unit.ChangeState(new AttackState(unit));
         }
     }
@@ -61,7 +65,7 @@ public class AttackState : IUnitState
 
     public void Update()
     {
-        if (unit.curTarget == null || unit.DistanceToTarget() > unit.attackDistance)
+        if (unit.curTarget == null || !unit.curTarget.isActiveAndEnabled ||unit.DistanceToTarget() > unit.attackDistance)
         {
             unit.curTarget = null;
             unit.ChangeState(new WalkState(unit));
@@ -104,7 +108,7 @@ public class AttackState : IUnitState
                 break;
         }
 
-        unit.weapon.StartAttack();
+        unit.weapon.StartAttack(unit.ATK, unit.curTarget);
     }
 }
 public class DeadState : IUnitState
@@ -114,7 +118,11 @@ public class DeadState : IUnitState
      public DeadState(UnitInfo unit) => this.unit = unit;
     public void Enter()
     {
+        unit.anim.SetTrigger("Die");
 
+        unit.curTarget = null;
+        unit.isAttack = false;
+        unit.StartCoroutine(HandleDeath());
     }
     public void Update()
     {
@@ -123,5 +131,12 @@ public class DeadState : IUnitState
     public void Exit()
     {
        
+    }
+
+    private IEnumerator HandleDeath()
+    {
+        yield return new WaitForSeconds(1.5f); // 사망 애니메이션 시간
+
+        unit.Deactivate(); // 풀에 반환하거나 SetActive(false)
     }
 }
