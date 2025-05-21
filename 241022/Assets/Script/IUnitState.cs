@@ -35,7 +35,7 @@ public class WalkState : IUnitState
 
         if (unit.curTarget != null)
         {
-            if(!unit.FindNearestEnemy().isActiveAndEnabled)
+            if(unit.curTarget.curHP <= 0)
             {
                 unit.curTarget = null;
                 return;
@@ -65,7 +65,7 @@ public class AttackState : IUnitState
 
     public void Update()
     {
-        if (unit.curTarget == null || !unit.curTarget.isActiveAndEnabled ||unit.DistanceToTarget() > unit.attackDistance)
+        if (unit.curTarget == null || unit.curTarget.curHP <= 0 || unit.DistanceToTarget() > unit.attackDistance)
         {
             unit.curTarget = null;
             unit.ChangeState(new WalkState(unit));
@@ -135,8 +135,8 @@ public class DeadState : IUnitState
 
     private IEnumerator HandleDeath()
     {
-        yield return new WaitForSeconds(1.5f); // 사망 애니메이션 시간
+        yield return new WaitForSeconds(2f);
 
-        unit.Deactivate(); // 풀에 반환하거나 SetActive(false)
+        unit.Deactivate();
     }
 }
