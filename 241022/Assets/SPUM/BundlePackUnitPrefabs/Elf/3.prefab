@@ -2893,7 +2893,7 @@ GameObject:
   - component: {fileID: 9076575649961859979}
   m_Layer: 5
   m_Name: 3
-  m_TagString: Untagged
+  m_TagString: Mine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2951,19 +2951,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   rigid: {fileID: 0}
+  unitType: 3
+  weaponType: 1
+  weapon: {fileID: 6987707620905753753}
+  anim: {fileID: 6328512198536874494}
   ID: 0
-  Name: 
-  HP: 0
-  cost: 0
   attackDistance: 0
-  curTarget: {fileID: 0}
   attackCT: 0
   attackDelay: 0
-  unitState: 0
-  unitType: 3
-  weapon: {fileID: 6987707620905753753}
+  curTarget: {fileID: 0}
   isMyUnit: 1
-  anim: {fileID: 6328512198536874494}
   isBullet: 0
   isAttack: 0
 --- !u!1 &5818440081335140569

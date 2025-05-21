@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unit;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class StageManager : MonoBehaviour
 {
@@ -16,7 +18,5 @@ public class StageManager : MonoBehaviour
         }
     }
 
-
-
-
+    // 테스트용 더미 데이터
 }

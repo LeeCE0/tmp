@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System;
+using static Unit.MyInfo;
+using Unity.VisualScripting;
 
 public class SpawnUnitManager : MonoBehaviour
 {
@@ -30,7 +33,7 @@ public class SpawnUnitManager : MonoBehaviour
 
     public void Start()
     {
-       
+        StartCoroutine(SpawnLoop());
     }
 
     public void SetData()
@@ -48,7 +51,7 @@ public class SpawnUnitManager : MonoBehaviour
         if (GameManager.Instance.IsEnoughCurrency(unitList[index + 1].Cost))
         {
             GameManager.Instance.UseCurrency(unitList[index + 1].Cost);
-            GameObject item = ObjectPoolManager.Instance.GetObjPool("Unit", MyUnitSpawnPoint, Quaternion.identity);
+            GameObject item = ObjectPoolManager.Instance.GetObjPool("MyUnit", MyUnitSpawnPoint, Quaternion.identity);
             UnitInfo newUnit = item.GetComponent<UnitInfo>();
 
             newUnit.SetSpawn(unitList[index + 1]);
@@ -61,10 +64,45 @@ public class SpawnUnitManager : MonoBehaviour
         }
     }
 
-
     public void RemoveUnit(int UnitID)
     {
         var rmUnit = myUnitList.Find(x => x.GetUnitID() == UnitID);
+    }
+
+    public float spawnInterval = 10f; // 10초
+
+    private IEnumerator SpawnLoop()
+    {
+        while (true)
+        {
+            SpawnUnitFromPool();
+            yield return new WaitForSeconds(spawnInterval);
+        }
+    }
+
+    private void SpawnUnitFromPool()
+    {
+        GameObject unit = ObjectPoolManager.Instance.GetObjPool("Enemy", EnemyUnitSpawnPoint, Quaternion.identity);
+        UnitInfo newUnit = unit.GetComponent<UnitInfo>();
+
+        newUnit.SetSpawn(GetRandomUnitData());
+
+        unit.transform.position = EnemyUnitSpawnPoint.transform.position;
+        unit.transform.rotation = Quaternion.identity;
+
+    }
+
+    private MyInfo.UnitData GetRandomUnitData()
+    {
+        return new MyInfo.UnitData(
+            100,
+            1,
+            "",
+            2,
+            1,
+            10,
+            0,
+            2);
     }
 
 

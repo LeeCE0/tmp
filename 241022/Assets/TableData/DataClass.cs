@@ -10,6 +10,7 @@ public static class DataClass
         public int DEF { get; set; }
         public int HP { get; set; }
         public int Cost { get; set; }
+        public float AttackDistance { get; set; }
     }
     public static Dictionary<int, UnitTable_UnitDataT> UnitTable_UnitDataTData = new Dictionary<int, UnitTable_UnitDataT>();
     static DataClass()
@@ -22,6 +23,7 @@ public static class DataClass
             DEF = 2,
             HP = 10,
             Cost = 20,
+            AttackDistance = 2f,
         });
        UnitTable_UnitDataTData.Add(2, new UnitTable_UnitDataT
         {
@@ -31,6 +33,7 @@ public static class DataClass
             DEF = 3,
             HP = 20,
             Cost = 40,
+            AttackDistance = 4f,
         });
        UnitTable_UnitDataTData.Add(3, new UnitTable_UnitDataT
         {
@@ -40,6 +43,7 @@ public static class DataClass
             DEF = 1,
             HP = 8,
             Cost = 80,
+            AttackDistance = 4f,
         });
     }
 

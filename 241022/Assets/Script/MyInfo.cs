@@ -49,17 +49,13 @@ namespace Unit
             public int DEF { get; set; }
             public int HP { get; set; }
             public int Cost { get; set; }
+            public float AttackDistance { get; set; }
             public byte UnitType { get; set; }
-            public string AnimPath { get; set; }
-            public RuntimeAnimatorController bodyController { get; set; }
-            public RuntimeAnimatorController armController { get; set; }
-            public RuntimeAnimatorController weaponController { get; set; }
-            public RuntimeAnimatorController bulletController { get; set; }
 
             public GameObject UnitPrefabs { get; set; } 
 
 
-            public UnitData(int key, float speed, string name, int atk, int def, int hp, int cost)
+            public UnitData(int key, float speed, string name, int atk, int def, int hp, int cost, float attackDistance)
             {
                 UnitID = key;
                 UnitSpeed = speed;
@@ -68,6 +64,7 @@ namespace Unit
                 DEF = def;
                 HP = hp;
                 Cost = cost;
+                AttackDistance = attackDistance;
             }
             public UnitData(UnitData data)
             {
@@ -79,6 +76,7 @@ namespace Unit
                 HP = data.HP;
                 Cost = data.Cost;
                 UnitType = data.UnitType;
+                AttackDistance = data.AttackDistance;
             }
         } 
 
@@ -92,7 +90,7 @@ namespace Unit
                 if (!myUnit.ContainsKey(item.Key))
                     myUnit.Add(item.Key, 
                         new UnitData
-                        (item.Key, item.Value.UnitSpeed, item.Value.UnitName, item.Value.ATK, item.Value.DEF, item.Value.HP, item.Value.Cost));
+                        (item.Key, item.Value.UnitSpeed, item.Value.UnitName, item.Value.ATK, item.Value.DEF, item.Value.HP, item.Value.Cost, item.Value.AttackDistance));
             }
 
             SpawnUnitManager.Instance.SetData();
