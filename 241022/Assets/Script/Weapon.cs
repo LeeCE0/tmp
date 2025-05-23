@@ -67,7 +67,7 @@ public class Weapon : MonoBehaviour
 
 
     //근거리
-    private void AttackSword(int dmg, UnitInfo target)
+    private void AttackSword(UnitInfo target, int dmg)
     {
         target.TakeDMG(dmg);
     }
@@ -96,7 +96,7 @@ public class Weapon : MonoBehaviour
     public void StartAttack(int dmg, UnitInfo target)
     {
         isAttack = true;
-        AttackSword(dmg, target);
+        AttackSword(target, dmg);
     }
     //공격 중지
     public void StopAttack() 

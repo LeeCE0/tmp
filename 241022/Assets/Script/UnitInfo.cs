@@ -9,11 +9,11 @@ using System;
 using UnityEngine.UIElements;
 using UnityEngine.SocialPlatforms;
 using static UnityEngine.UI.CanvasScaler;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class UnitInfo : MonoBehaviour
 {
     private WalkState walkState;
-    private AttackState attackState;
     private DeadState deadState;
     private IUnitState currentState;
 
@@ -45,7 +45,6 @@ public class UnitInfo : MonoBehaviour
     void Start()
     {
         walkState = new WalkState(this);
-        attackState = new AttackState(this);
         deadState = new DeadState(this);
         ChangeState(walkState);
     }
@@ -100,9 +99,24 @@ public class UnitInfo : MonoBehaviour
     public float DistanceToTarget() =>
       curTarget == null ? float.MaxValue : Vector2.Distance(transform.position, curTarget.transform.position);
 
+
+    public NexusInfo FindNexus()
+    {
+        NexusInfo nexusTarget = isMyUnit ? SpawnUnitManager.Instance.enemyNexus : SpawnUnitManager.Instance.myNexus;
+
+        if (nexusTarget != null)
+        {
+            float distance = Vector2.Distance(transform.position, nexusTarget.transform.position);
+            if (distance < attackDistance)
+                return nexusTarget;
+        }
+        return null;
+    }
+
     public UnitInfo FindNearestEnemy()
     {
         List<UnitInfo> enemies = isMyUnit ? SpawnUnitManager.Instance.enemyUnitList : SpawnUnitManager.Instance.myUnitList;
+
         if (enemies == null || enemies.Count == 0) return null;
 
         UnitInfo nearest = null;

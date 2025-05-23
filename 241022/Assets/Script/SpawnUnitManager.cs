@@ -25,10 +25,13 @@ public class SpawnUnitManager : MonoBehaviour
     [SerializeField] UnitInfo enemyUnit;
     [SerializeField] GameObject MyUnitSpawnPoint;
     [SerializeField] GameObject EnemyUnitSpawnPoint;
+    [SerializeField] public NexusInfo myNexus;
+    [SerializeField] public NexusInfo enemyNexus;
 
     Dictionary<int, MyInfo.UnitData> unitList = new Dictionary<int, MyInfo.UnitData>();   // 뽑을 수 있는 유닛 리스트
     public List<UnitInfo> myUnitList = new List<UnitInfo>();   // 필드에 소환되어있는 유닛
     public List<UnitInfo> enemyUnitList = new List<UnitInfo>();  //필드에 소환되어있는 적 유닛
+
 
 
     public void Start()

@@ -18,5 +18,11 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    // 테스트용 더미 데이터
+    public void SetGameEnd(bool isMine)
+    {
+        if (isMine)
+            Debug.LogError("LOSE");
+        else
+            Debug.LogError("WIN");
+    }
 }

@@ -30,7 +30,15 @@ public class WalkState : IUnitState
             unit.anim.SetFloat("RunState", 0.5f);
             float dir = unit.isMyUnit ? 1f : -1f;
             unit.transform.Translate(Vector2.right * dir * unit.moveSpeed * Time.deltaTime);
+
             unit.curTarget = unit.FindNearestEnemy();
+
+            NexusInfo nexus = unit.FindNexus();
+            if (nexus != null && Vector2.Distance(unit.transform.position, nexus.transform.position) < unit.attackDistance)
+            {
+                unit.ChangeState(new NexusAttackState(unit, nexus));
+                return;
+            }
         }
 
         if (unit.curTarget != null)
@@ -138,5 +146,47 @@ public class DeadState : IUnitState
         yield return new WaitForSeconds(2f);
 
         unit.Deactivate();
+    }
+}
+
+public class NexusAttackState : IUnitState
+{
+    private UnitInfo unit;
+    private NexusInfo nexus;
+
+    public NexusAttackState(UnitInfo unit, NexusInfo nexus)
+    {
+        this.unit = unit;
+        this.nexus = nexus;
+    }
+
+    public MyInfo.eUnitState StateType => MyInfo.eUnitState.Attack;
+
+    public void Enter()
+    {
+        unit.attackDelay = 0f;
+        unit.isAttack = true;
+        unit.anim.SetTrigger("Attack");
+    }
+
+    public void Update()
+    {
+        if (nexus == null)
+        {
+            unit.ChangeState(new WalkState(unit));
+            return;
+        }
+
+        unit.attackDelay += Time.deltaTime;
+        if (unit.attackDelay >= unit.attackCT)
+        {
+            unit.attackDelay = 0f;
+            nexus.TakeDMG(unit.ATK);
+        }
+    }
+
+    public void Exit()
+    {
+        unit.isAttack = false;
     }
 }
