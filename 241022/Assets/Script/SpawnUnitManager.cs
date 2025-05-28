@@ -51,11 +51,16 @@ public class SpawnUnitManager : MonoBehaviour
     }
     public void SpawnUnit(int index)
     {
-        if (GameManager.Instance.IsEnoughCurrency(unitList[index + 1].Cost))
+        if (StageManager.Instance.IsEnoughCurrency(unitList[index + 1].Cost))
         {
-            GameManager.Instance.UseCurrency(unitList[index + 1].Cost);
-            GameObject item = ObjectPoolManager.Instance.GetObjPool("MyUnit", MyUnitSpawnPoint, Quaternion.identity);
+            StageManager.Instance.UseCurrency(unitList[index+ 1].Cost);
+            GameObject item = ObjectPoolManager.Instance.GetObjPool(unitList[index + 1].UnitType.ToString(), MyUnitSpawnPoint, Quaternion.identity);
             UnitInfo newUnit = item.GetComponent<UnitInfo>();
+            if (newUnit == null)
+            {
+                Debug.LogError("no component : UnitInfo");
+                return;
+            } 
 
             newUnit.SetSpawn(unitList[index + 1]);
             myUnitList.Add(newUnit);
@@ -63,7 +68,7 @@ public class SpawnUnitManager : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.StartShaking();
+            StageManager.Instance.StartShaking();
         }
     }
 

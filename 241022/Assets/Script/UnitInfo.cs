@@ -10,6 +10,7 @@ using UnityEngine.UIElements;
 using UnityEngine.SocialPlatforms;
 using static UnityEngine.UI.CanvasScaler;
 using static UnityEngine.EventSystems.EventTrigger;
+using static Unit.MyInfo;
 
 public class UnitInfo : MonoBehaviour
 {
@@ -89,7 +90,8 @@ public class UnitInfo : MonoBehaviour
         curTarget = null;
         curHP = data.HP;
         ATK = data.ATK;
-
+        unitType = (eUnitType)data.UnitType;
+        weapon.SetWeapon(unitType, this);
         ChangeState(walkState);
 
         Vector3 scale = transform.localScale;
@@ -145,7 +147,7 @@ public class UnitInfo : MonoBehaviour
 
     public void Deactivate()
     {
-        string tag = isMyUnit ? "MyUnit" : "Enemy";
+        string tag = isMyUnit ? ID.ToString() : "Enemy";
         ObjectPoolManager.Instance.ReturnToPool(tag, gameObject);
     }
 }

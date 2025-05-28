@@ -30,7 +30,7 @@ public class WalkState : IUnitState
             unit.anim.SetFloat("RunState", 0.5f);
             float dir = unit.isMyUnit ? 1f : -1f;
             unit.transform.Translate(Vector2.right * dir * unit.moveSpeed * Time.deltaTime);
-
+             
             unit.curTarget = unit.FindNearestEnemy();
 
             NexusInfo nexus = unit.FindNexus();
@@ -96,9 +96,10 @@ public class AttackState : IUnitState
     private void PerformAttack()
     {
         if (unit.curTarget == null) return;
-        unit.weapon.SetWeapon(unit.unitType);
         unit.anim.SetTrigger("Attack");
         unit.anim.SetFloat("AttackState", 0f);
+
+        unit.weapon.StartAttack(unit.ATK, unit.curTarget);
 
         switch (unit.unitType)
         {
@@ -115,8 +116,6 @@ public class AttackState : IUnitState
                 unit.anim.SetFloat("RunState", 0f);
                 break;
         }
-
-        unit.weapon.StartAttack(unit.ATK, unit.curTarget);
     }
 }
 public class DeadState : IUnitState

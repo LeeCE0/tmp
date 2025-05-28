@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using Unit;
 using UnityEngine;
+using static Unit.MyInfo;
 
 public class Weapon : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class Weapon : MonoBehaviour
     public bool isMeeleeType = false;
     private bool isRunning = false;
     public bool isAttack = false;
+    public UnitInfo unit;
      
     
     //원거리 (화살)
@@ -52,8 +54,6 @@ public class Weapon : MonoBehaviour
 
             yield return null;
         }
-
-
         Explode();
     }
 
@@ -64,7 +64,14 @@ public class Weapon : MonoBehaviour
     }
 
     //원거리 (마법)
+    private void LaunchFireball(GameObject start, Vector2 target, int dmg, UnitInfo targetUnit)
+    {
+        GameObject bullet = ObjectPoolManager.Instance.GetObjPool("fireball", unit.gameObject, Quaternion.identity);
+        bullet.transform.position = start.transform.position;
 
+        Bullet bulletData = bullet.GetComponent<Bullet>();
+        bulletData.Init(dmg, targetUnit);
+    }
 
     //근거리
     private void AttackSword(UnitInfo target, int dmg)
@@ -73,8 +80,9 @@ public class Weapon : MonoBehaviour
     }
 
     //유닛 무기 정보 설정하기
-    public void SetWeapon(MyInfo.eUnitType unitType)
+    public void SetWeapon(MyInfo.eUnitType unitType, UnitInfo units)
     {
+        unit = units;
         switch (unitType)
         {
             case MyInfo.eUnitType.Swordsman:
@@ -96,7 +104,20 @@ public class Weapon : MonoBehaviour
     public void StartAttack(int dmg, UnitInfo target)
     {
         isAttack = true;
-        AttackSword(target, dmg);
+        switch (weaponType)
+        {
+            case eWeaponType.Sword:
+                AttackSword(target, dmg);
+                break;
+            case eWeaponType.Bow:
+                break;
+            case eWeaponType.Magic:
+                LaunchFireball(gameObject, target.transform.position, dmg, target);
+                break;
+            case eWeaponType.Ax:
+                AttackSword(target, dmg);
+                break;
+        }
     }
     //공격 중지
     public void StopAttack() 

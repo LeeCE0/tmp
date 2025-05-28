@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -32,14 +33,14 @@ namespace Unit
 
         public enum eUnitType
         {
+            Swordsman = 1,
+            Barbarian,
             Magician,
             Bower,
             Knight,
-            Swordsman,
-            Barbarian,
         }
 
-
+         
         public class UnitData
         {
             public int UnitID { get; set; }
@@ -65,6 +66,7 @@ namespace Unit
                 HP = hp;
                 Cost = cost;
                 AttackDistance = attackDistance;
+                UnitType = (byte)UnitID;
             }
             public UnitData(UnitData data)
             {
@@ -77,6 +79,7 @@ namespace Unit
                 Cost = data.Cost;
                 UnitType = data.UnitType;
                 AttackDistance = data.AttackDistance;
+                UnitType = (byte)data.UnitType;
             }
         } 
 
@@ -97,7 +100,6 @@ namespace Unit
         }
 
         public Dictionary<int, UnitData> GetAllUnit()
-
         {
             return myUnit;
         }

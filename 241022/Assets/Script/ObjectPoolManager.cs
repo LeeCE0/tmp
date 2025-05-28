@@ -47,6 +47,7 @@ public class ObjectPoolManager : MonoBehaviour
     }
     public void AddPool(string tag, GameObject prefab, int size)
     {
+        prefab.transform.SetParent(gameObject.transform);
         if (!poolDictionary.ContainsKey(tag))
         {
             Queue<GameObject> objectPool = new Queue<GameObject>();
@@ -82,7 +83,7 @@ public class ObjectPoolManager : MonoBehaviour
         poolOBJ.SetActive(true);
         poolOBJ.transform.position = parent.transform.position;
         poolOBJ.transform.rotation = rotation;
-        poolOBJ.transform.parent = parent.transform;
+        //poolOBJ.transform.parent = parent.transform;
 
         return poolOBJ;
     }
@@ -90,6 +91,7 @@ public class ObjectPoolManager : MonoBehaviour
     public void ReturnToPool(string tag, GameObject obj)
     {
         obj.SetActive(false);
+        obj.transform.SetParent(gameObject.transform);
         if (!poolDictionary.ContainsKey(tag))
         {
             Debug.LogError($"Pool with tag {tag} doesn't exist.");

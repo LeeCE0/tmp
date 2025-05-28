@@ -2959,10 +2959,12 @@ MonoBehaviour:
   attackDistance: 0
   attackCT: 0
   attackDelay: 0
+  ATK: 0
   curTarget: {fileID: 0}
   isMyUnit: 1
   isBullet: 0
   isAttack: 0
+  curHP: 0
 --- !u!1 &5818440081335140569
 GameObject:
   m_ObjectHideFlags: 0
