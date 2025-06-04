@@ -18,8 +18,11 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
+    [SerializeField] TextMeshProUGUI startText;
 
     public int selectedStage;
+
+    float blinkInterval = 0.5f;
 
     private void Awake()
     {
@@ -33,6 +36,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
     public void LoadStage(int stageIndex)
     {
         selectedStage = stageIndex;
