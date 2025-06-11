@@ -2,11 +2,6 @@ using Unit;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using System;
-using static Unit.MyInfo;
-using Unity.VisualScripting;
-
 public class SpawnUnitManager : MonoBehaviour
 {
     private static SpawnUnitManager instance;

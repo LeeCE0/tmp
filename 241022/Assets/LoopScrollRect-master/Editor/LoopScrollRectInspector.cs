@@ -31,6 +31,7 @@ public class LoopScrollRectInspector : Editor
     //==========LoopScrollRect==========
     SerializedProperty totalCount;
     SerializedProperty reverseDirection;
+    SerializedProperty prototypePrefab;
     int index = 0;
     float speed = 1000, time = 1;
 
@@ -60,6 +61,7 @@ public class LoopScrollRectInspector : Editor
         //==========LoopScrollRect==========
         totalCount = serializedObject.FindProperty("totalCount");
         reverseDirection = serializedObject.FindProperty("reverseDirection");
+        prototypePrefab = serializedObject.FindProperty("prototypePrefab");
     }
 
     protected virtual void OnDisable()
@@ -177,7 +179,9 @@ public class LoopScrollRectInspector : Editor
         //==========LoopScrollRect==========
         EditorGUILayout.PropertyField(totalCount);
         EditorGUILayout.PropertyField(reverseDirection);
-        
+        EditorGUILayout.PropertyField(prototypePrefab);
+
+
         serializedObject.ApplyModifiedProperties();
         
         EditorGUILayout.Space();
