@@ -2,6 +2,8 @@ using Unit;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unit.UnitDataContainer;
+
 public class SpawnUnitManager : MonoBehaviour
 {
     private static SpawnUnitManager instance;
@@ -23,7 +25,7 @@ public class SpawnUnitManager : MonoBehaviour
     [SerializeField] public NexusInfo myNexus;
     [SerializeField] public NexusInfo enemyNexus;
 
-    Dictionary<int, MyInfo.UnitData> unitList = new Dictionary<int, MyInfo.UnitData>();   // 뽑을 수 있는 유닛 리스트
+    Dictionary<int, UnitData> unitList = new Dictionary<int, UnitData>();   // 뽑을 수 있는 유닛 리스트
     public List<UnitInfo> myUnitList = new List<UnitInfo>();   // 필드에 소환되어있는 유닛
     public List<UnitInfo> enemyUnitList = new List<UnitInfo>();  //필드에 소환되어있는 적 유닛
 
@@ -37,7 +39,7 @@ public class SpawnUnitManager : MonoBehaviour
     public void SetData()
     {
         unitList.Clear();
-        unitList = MyInfo.Instance.GetAllUnit();
+        unitList = PlayerDataManager.Instance.GetAllUnit();
 
         for (int i = 0; i < unitBtn.Length; i++)
         {
@@ -102,9 +104,9 @@ public class SpawnUnitManager : MonoBehaviour
     }
 
 
-    private MyInfo.UnitData GetRandomUnitData()
+    private UnitData GetRandomUnitData()
     {
-        return new MyInfo.UnitData(
+        return new UnitData(
             100,
             1,
             "",

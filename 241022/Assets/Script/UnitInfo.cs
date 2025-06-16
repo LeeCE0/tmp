@@ -1,16 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unit;
-using UnityEditor.Animations;
-using UnityEditor.SceneManagement;
-using Unity.VisualScripting;
-using System;
-using UnityEngine.UIElements;
-using UnityEngine.SocialPlatforms;
-using static UnityEngine.UI.CanvasScaler;
-using static UnityEngine.EventSystems.EventTrigger;
-using static Unit.MyInfo;
+using static Unit.UnitDataContainer;
 
 public class UnitInfo : MonoBehaviour
 {
@@ -21,7 +12,7 @@ public class UnitInfo : MonoBehaviour
     public float moveSpeed = 2.0f;
     [SerializeField] Rigidbody2D rigid;
 
-    [SerializeField] public MyInfo.eUnitType unitType = MyInfo.eUnitType.Swordsman;
+    [SerializeField] public eUnitType unitType = eUnitType.Swordsman;
     [SerializeField] Weapon.eWeaponType weaponType = Weapon.eWeaponType.Sword;
     [SerializeField] public Weapon weapon;
 
@@ -63,7 +54,7 @@ public class UnitInfo : MonoBehaviour
     }
 
     // 오브젝트 풀에서 꺼낼 때 호출할 초기화
-    public void Initialize(MyInfo.UnitData data)
+    public void Initialize(UnitData data)
     {
         gameObject.SetActive(true); // 풀에서 꺼낼 때 활성화
 
@@ -81,7 +72,7 @@ public class UnitInfo : MonoBehaviour
         ChangeState(walkState);
     }   
 
-    public void SetSpawn(MyInfo.UnitData data)
+    public void SetSpawn(UnitData data)
     {
         ID = data.UnitID;
         moveSpeed = data.UnitSpeed;

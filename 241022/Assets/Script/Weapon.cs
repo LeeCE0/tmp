@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using Unit;
 using UnityEngine;
-using static Unit.MyInfo;
+using static Unit.UnitDataContainer;
 
 public class Weapon : MonoBehaviour
 {
@@ -80,21 +80,21 @@ public class Weapon : MonoBehaviour
     }
 
     //유닛 무기 정보 설정하기
-    public void SetWeapon(MyInfo.eUnitType unitType, UnitInfo units)
+    public void SetWeapon(eUnitType unitType, UnitInfo units)
     {
         unit = units;
         switch (unitType)
         {
-            case MyInfo.eUnitType.Swordsman:
+            case eUnitType.Swordsman:
                 weaponType = eWeaponType.Sword;
                 break;
-            case MyInfo.eUnitType.Bower:
+            case eUnitType.Bower:
                 weaponType = eWeaponType.Bow;
                 break;
-            case MyInfo.eUnitType.Magician:
+            case eUnitType.Magician:
                 weaponType = eWeaponType.Magic;
                 break;
-            case MyInfo.eUnitType.Barbarian:
+            case eUnitType.Barbarian:
                 weaponType = eWeaponType.Ax;
                 break;
         }

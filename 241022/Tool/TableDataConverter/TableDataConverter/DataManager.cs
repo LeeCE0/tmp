@@ -152,7 +152,8 @@ namespace TableDataConverter
                                 sb.AppendLine($"            {headers[j]} = \"{value}\",");
                                 break;
                             default:
-                                throw new Exception($"Unsupported data type: {dataTypes[j]}");
+                                sb.AppendLine($"    {headers[j].Trim()} = ({dataTypes[j].Trim()})System.Enum.Parse(typeof({dataTypes[j].Trim()}), \"{value}\"),");
+                                break;
                         }
                     }
                     sb.AppendLine("        });");

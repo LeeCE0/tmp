@@ -4,6 +4,7 @@ using TMPro;
 using Unit;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unit.UnitDataContainer;
 
 public class UnitInfoSlot : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class UnitInfoSlot : MonoBehaviour
     [SerializeField] Image costImage;
 
 
-    public void SetSlotData(MyInfo.UnitData data)
+    public void SetSlotData(UnitData data)
     {
         ID = data.UnitID;
         costText.text = data.Cost.ToString("N0");

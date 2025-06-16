@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unit;
 using UnityEngine;
+using static Unit.UnitDataContainer;
+
 public interface IUnitState
 {
-    MyInfo.eUnitState StateType { get; }
+    eUnitState StateType { get; }
     void Enter();
     void Update();
     void Exit();
@@ -13,7 +14,7 @@ public interface IUnitState
 public class WalkState : IUnitState
 {
     private UnitInfo unit;
-    public MyInfo.eUnitState StateType => MyInfo.eUnitState.Walk;
+    public eUnitState StateType => eUnitState.Walk;
 
     public WalkState(UnitInfo unit) => this.unit = unit;
 
@@ -61,7 +62,7 @@ public class WalkState : IUnitState
 public class AttackState : IUnitState
 {
     private UnitInfo unit;
-    public MyInfo.eUnitState StateType => MyInfo.eUnitState.Attack;
+    public eUnitState StateType => eUnitState.Attack;
 
     public AttackState(UnitInfo unit) => this.unit = unit;
 
@@ -103,15 +104,15 @@ public class AttackState : IUnitState
 
         switch (unit.unitType)
         {
-            case MyInfo.eUnitType.Swordsman:
+            case eUnitType.Swordsman:
                 unit.anim.SetFloat("NormalState", 0f);
                 unit.anim.SetFloat("RunState", 0f);
                 break;
-            case MyInfo.eUnitType.Bower:
+            case eUnitType.Bower:
                 unit.anim.SetFloat("NormalState", 0.5f);
                 unit.anim.SetFloat("RunState", 0f);
                 break;
-            case MyInfo.eUnitType.Magician:
+            case eUnitType.Magician:
                 unit.anim.SetFloat("NormalState", 1.0f);
                 unit.anim.SetFloat("RunState", 0f);
                 break;
@@ -120,7 +121,7 @@ public class AttackState : IUnitState
 }
 public class DeadState : IUnitState
 {
-    public MyInfo.eUnitState StateType => MyInfo.eUnitState.Dead;
+    public eUnitState StateType => eUnitState.Dead;
     private UnitInfo unit;
      public DeadState(UnitInfo unit) => this.unit = unit;
     public void Enter()
@@ -159,7 +160,7 @@ public class NexusAttackState : IUnitState
         this.nexus = nexus;
     }
 
-    public MyInfo.eUnitState StateType => MyInfo.eUnitState.Attack;
+    public eUnitState StateType => eUnitState.Attack;
 
     public void Enter()
     {
