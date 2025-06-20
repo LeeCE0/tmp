@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
-using static DataClass;
 using static Unit.UnitDataContainer;
 
 public class PlayerDataManager : MonoBehaviour
@@ -26,15 +26,6 @@ public class PlayerDataManager : MonoBehaviour
     {
         myUnit.Clear();
 
-        //ÌÖåÏù¥Î∏î Î™®Îì† Ïú†Îãõ Îç∞Ïù¥ÌÑ∞ Í∞ÄÏ†∏Ïò§Í∏∞ : ÏûÑÏãú, ÎÇ¥ Ïú†ÎãõÏùÄ Îî∞Î°ú ÏÑ§Ï†ïÌïòÍ∏∞
-        foreach (var item in UnitTable_UnitDataTData)
-        {
-            if (!myUnit.ContainsKey(item.Key))
-                myUnit.Add(item.Key,
-                    new UnitData
-                    (item.Key, item.Value.UnitSpeed, item.Value.UnitName, item.Value.ATK, item.Value.DEF, item.Value.HP, item.Value.Cost, item.Value.AttackDistance));
-        }
-
         SpawnUnitManager.Instance.SetData();
     }
 
@@ -42,4 +33,94 @@ public class PlayerDataManager : MonoBehaviour
     {
         return myUnit;
     }
+
+    #region UnitUnlockData
+    private Dictionary<int, int> unitLevels = new Dictionary<int, int>();
+
+    private const string SaveKey = "UnitLevelData";
+
+    // ¿Ø¥÷ «ÿ±› ø©∫Œ
+    public bool IsUnlocked(int unitID)
+    {
+        return unitLevels.ContainsKey(unitID);
+    }
+
+    // ¿Ø¥÷ «ÿ±› (∑π∫ß 1∑Œ µÓ∑œ)
+    public void UnlockUnit(int unitID)
+    {
+        if (!unitLevels.ContainsKey(unitID))
+        {
+            unitLevels[unitID] = 1;
+            SaveUnitData();
+        }
+    }
+
+    // ∞≠»≠
+    public void UpgradeUnit(int unitID)
+    {
+        if (unitLevels.ContainsKey(unitID))
+        {
+            unitLevels[unitID]++;
+            SaveUnitData();
+        }
+    }
+
+    // «ˆ¿Á ∞≠»≠ ∑π∫ß
+    public int GetUnitLevel(int unitID)
+    {
+        return unitLevels.TryGetValue(unitID, out int level) ? level : 0;
+    }
+
+    // ¿¸√º µ•¿Ã≈Õ ¿˙¿Â
+    public void SaveUnitData()
+    {
+        var saveList = new List<UnitLevelData>();
+        foreach (var item in unitLevels)
+        {
+            saveList.Add(new UnitLevelData { Key = item.Key, Value = item.Value });
+        }
+
+        string json = JsonUtility.ToJson(new SaveWrapper { units = saveList });
+        PlayerPrefs.SetString(SaveKey, json);
+        PlayerPrefs.Save();
+    }
+
+    // ∫“∑Øø¿±‚
+    public void LoadUnitData()
+    {
+        unitLevels.Clear();
+
+        if (PlayerPrefs.HasKey(SaveKey))
+        {
+            string json = PlayerPrefs.GetString(SaveKey);
+            var data = JsonUtility.FromJson<SaveWrapper>(json);
+            if (data?.units != null)
+            {
+                foreach (var item in data.units)
+                {
+                    unitLevels[item.Key] = item.Value;
+                }
+            }
+        }
+    }
+
+    [System.Serializable]
+    private class SaveWrapper
+    {
+        public List<UnitLevelData> units;
+    }
+
+    [System.Serializable]
+    private class UnitLevelData
+    {
+        public int Key;
+        public int Value;
+
+        public static implicit operator KeyValuePair<int, int>(UnitLevelData u)
+            => new KeyValuePair<int, int>(u.Key, u.Value);
+
+        public static implicit operator UnitLevelData(KeyValuePair<int, int> pair)
+            => new UnitLevelData { Key = pair.Key, Value = pair.Value };
+    }
+    #endregion
 }

@@ -106,6 +106,7 @@ namespace TableDataConverter
             sb.AppendLine();
             sb.AppendLine("public static class DataClass");
             sb.AppendLine("{");
+            Dictionary<string, List<string>> enumDic = new Dictionary<string, List<string>>();
             
             foreach (var file in Directory.GetFiles(csvPath, "*.csv"))
             {
@@ -121,7 +122,14 @@ namespace TableDataConverter
                 {
                     string header = headers[i].Trim(); 
                     string type = types[i].Trim();
-                    sb.AppendLine($"        public {type} {header} {{ get; set; }}");
+                    if(type == "enum")
+                    {
+                        enumDic.Add(header, new List<string>());
+                        sb.AppendLine($"        public {header} {"e" + header} {{ get; set; }}");
+                    }
+
+                    else
+                        sb.AppendLine($"        public {type} {header} {{ get; set; }}");
                 }
                 sb.AppendLine("    }");
                 sb.AppendLine($"    public static Dictionary<int, {className}> {className + "Data"} = new Dictionary<int, {className}>();");
@@ -151,8 +159,16 @@ namespace TableDataConverter
                             case "string":
                                 sb.AppendLine($"            {headers[j]} = \"{value}\",");
                                 break;
+                            case "enum":
+                                {
+                                    if (enumDic.ContainsKey(headers[j]))
+                                    {
+                                        enumDic[headers[j]].Add(value);
+                                    }
+                                    sb.AppendLine($"            {"e"+ headers[j].Trim()} = ({headers[j].Trim()})System.Enum.Parse(typeof({headers[j].Trim()}), \"{value}\"),");
+                                }                               
+                                break;
                             default:
-                                sb.AppendLine($"    {headers[j].Trim()} = ({dataTypes[j].Trim()})System.Enum.Parse(typeof({dataTypes[j].Trim()}), \"{value}\"),");
                                 break;
                         }
                     }
@@ -163,6 +179,43 @@ namespace TableDataConverter
                 sb.AppendLine();
             }
             sb.AppendLine("}");
+
+            foreach (var enumEntry in enumDic)
+            {
+                string enumName = enumEntry.Key;
+                List<string> values = new List<string>();
+
+                foreach (var file in Directory.GetFiles(csvPath, "*.csv"))
+                {
+                    string[] lines = File.ReadAllLines(file);
+                    if (lines.Length < 3) continue;
+
+                    string[] headers = lines[0].Split(',');
+                    string[] types = lines[1].Split(',');
+
+                    int enumIndex = Array.IndexOf(headers, enumName);
+                    if (enumIndex < 0 || types[enumIndex] != "enum") continue;
+
+                    for (int i = 2; i < lines.Length; i++)
+                    {
+                        string[] row = lines[i].Split(',');
+                        if (enumIndex >= row.Length) continue;
+
+                        string val = row[enumIndex].Trim();
+                        if (!values.Contains(val))
+                            values.Add(val);
+                    }
+                }
+
+                sb.AppendLine($"public enum {enumName}");
+                sb.AppendLine("{");
+                foreach (var val in values)
+                {
+                    sb.AppendLine($"    {val},");
+                }
+                sb.AppendLine("}");
+                sb.AppendLine();
+            }
 
             File.WriteAllText(dataClassPath, sb.ToString());
         }

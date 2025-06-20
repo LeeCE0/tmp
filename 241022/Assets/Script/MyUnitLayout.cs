@@ -14,14 +14,6 @@ public class MyUnitLayout : MonoBehaviour, LoopScrollDataSource
 
     public void Start()
     {
-        foreach (var item in UnitTable_UnitDataTData)
-        {
-            if (!unitList.ContainsKey(item.Key))
-                unitList.Add(item.Key,
-                    new UnitData
-                    (item.Key, item.Value.UnitSpeed, item.Value.UnitName, item.Value.ATK, item.Value.DEF, item.Value.HP, item.Value.Cost, item.Value.AttackDistance));
-        }
-
         scrollRect.totalCount = unitList.Count;
         scrollRect.Initialize(this);
         scrollRect.RefillCells(); 

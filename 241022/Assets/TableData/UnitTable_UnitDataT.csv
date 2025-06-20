@@ -1,5 +1,6 @@
-UnitSpeed,UnitName,ATK,DEF,HP,Cost,AttackDistance
-float,string,int,int,int,int,float
-1,A,3,2,10,20,2
-1.2,b,1,3,20,40,4
-1.5,c,5,1,8,80,4
+UnitSpeed,UnitName,ATK,DEF,HP,Cost,AttackDistance,LockOnType,PrefabPath,PortraitPath
+float,string,int,int,int,int,float,enum,string,string
+1.3,전사,3,5,30,20,2,None,Sword,Portraits/Swordsman
+1,마법사,6,1,15,60,4,None,Magician,Portraits/Magician
+1.1,궁수,4,2,15,50,6,None,Bower,Portraits/Bower
+1.5,버서커,5,6,25,30,2,None,Barbarian,Portraits/Barbarian
