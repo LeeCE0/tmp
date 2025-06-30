@@ -19,11 +19,33 @@ public class UIManager : MonoBehaviour
         Main,
         Popup,
     }
+
+    public enum eUIType
+    {
+        StartUI,
+        UnitSelectUI,
+        StageUI,
+    }
+
+
     [SerializeField] Canvas mainCanvas;
     [SerializeField] Canvas popupCanvas;
 
-    public void LoadUI()
-    {
+    [SerializeField] StartPage startPage;
+    [SerializeField] UnitSelectUI unitSelectUI;
+    [SerializeField] GameObject StageUI;
 
+    public void LoadUI(eUIType uiType)
+    {
+        switch(uiType)
+        {
+            case eUIType.StartUI:
+                startPage.gameObject.SetActive(true);
+                break;
+            case eUIType.UnitSelectUI:
+                break;
+            case eUIType.StageUI:
+                break;
+        }
     }
 }
