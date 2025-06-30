@@ -90,7 +90,7 @@ public class SpawnUnitManager : MonoBehaviour
         GameObject unit = ObjectPoolManager.Instance.GetObjPool("Enemy", EnemyUnitSpawnPoint, Quaternion.identity);
         UnitInfo newUnit = unit.GetComponent<UnitInfo>();
 
-        newUnit.SetSpawn(GetRandomUnitData());
+        //newUnit.SetSpawn(GetRandomUnitData());
         enemyUnitList.Add(newUnit);
 
         unit.transform.position = EnemyUnitSpawnPoint.transform.position;
@@ -104,18 +104,18 @@ public class SpawnUnitManager : MonoBehaviour
     }
 
 
-    private UnitData GetRandomUnitData()
-    {
-        return new UnitData(
-            100,
-            1,
-            "",
-            2,
-            1,
-            10,
-            0,
-            2, null);
-    }
+    //private UnitData GetRandomUnitData()
+    //{
+    //    return new UnitData(
+    //        100,
+    //        1,
+    //        "",
+    //        2,
+    //        1,
+    //        10,
+    //        0,
+    //        2, null);
+    //}
 
 
 }

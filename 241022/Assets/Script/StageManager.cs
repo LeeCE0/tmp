@@ -7,7 +7,7 @@ using UnityEngine.Pool;
 
 public class StageManager : MonoBehaviour
 {
-    //적 스폰과 스테이지를 담당하는 매니저
+    //스테이지 담당하는 매니저
     private static StageManager instance;
     public static StageManager Instance
     {
@@ -68,7 +68,6 @@ public class StageManager : MonoBehaviour
     {
         resourceText.text = curCurrency.ToString();
     }
-    #endregion
 
     public void StartShaking()
     {
@@ -96,6 +95,10 @@ public class StageManager : MonoBehaviour
 
         resourceText.color = Color.white;
     }
+
+    #endregion
+
+
 
     public void SetGameEnd(bool isMine)
     {

@@ -22,12 +22,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Canvas mainCanvas;
     [SerializeField] Canvas popupCanvas;
 
-    public void Initialize()
-    {
-        SetMainUI();
-    }
-
-    public void SetMainUI()
+    public void LoadUI()
     {
 
     }

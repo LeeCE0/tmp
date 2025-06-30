@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Unit
 {
@@ -45,7 +44,9 @@ namespace Unit
             public int HP { get; set; }
             public int Cost { get; set; }
             public float AttackDistance { get; set; }
-            public eUnitType UnitType { get; set; } 
+            public eUnitType UnitType { get; set; }
+
+            public bool IsMyUnit { get; set; }
 
             public GameObject UnitPrefabs { get; set; }
             public Sprite PortraitImage { get; set; }
@@ -80,6 +81,11 @@ namespace Unit
             public void SetUnitType(eUnitType type)
             {
                 UnitType = type;
+            }
+
+            public void SetTeam(bool isMine)
+            {
+                IsMyUnit = isMine;
             }
         }
 
