@@ -37,14 +37,20 @@ public class UIManager : MonoBehaviour
 
     public void LoadUI(eUIType uiType)
     {
-        switch(uiType)
+        startPage.gameObject.SetActive(false);
+        unitSelectUI.gameObject.SetActive(false);
+        StageUI.SetActive(false);
+
+        switch (uiType)
         {
             case eUIType.StartUI:
                 startPage.gameObject.SetActive(true);
                 break;
             case eUIType.UnitSelectUI:
+                unitSelectUI.gameObject.SetActive(true);
                 break;
             case eUIType.StageUI:
+                StageUI.SetActive(true);
                 break;
         }
     }

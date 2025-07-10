@@ -61,6 +61,7 @@ public class StartPage : MonoBehaviour
 
     private void GoToNextPage()
     {
+        GameManager.Instance.GameStart();
         gameObject.SetActive(false);
     }
 }
