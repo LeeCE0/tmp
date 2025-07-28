@@ -27,7 +27,7 @@ public class StageSlot : MonoBehaviour
 
     public void OpenInfoPopup()
     {
-
-    }
+        Debug.Log("click");
+    } 
 
 }
