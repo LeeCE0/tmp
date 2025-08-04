@@ -25,7 +25,7 @@ public class SpawnUnitManager : MonoBehaviour
     [SerializeField] public NexusInfo myNexus;
     [SerializeField] public NexusInfo enemyNexus;
 
-    Dictionary<int, UnitData> unitList = new Dictionary<int, UnitData>();   // 뽑을 수 있는 유닛 리스트
+    Dictionary<int, UnitsData> unitList = new Dictionary<int, UnitsData>();   // 뽑을 수 있는 유닛 리스트
     public List<UnitInfo> myUnitList = new List<UnitInfo>();   // 필드에 소환되어있는 유닛
     public List<UnitInfo> enemyUnitList = new List<UnitInfo>();  //필드에 소환되어있는 적 유닛
 
@@ -48,10 +48,10 @@ public class SpawnUnitManager : MonoBehaviour
     }
     public void SpawnUnit(int index)
     {
-        if (StageManager.Instance.IsEnoughCurrency(unitList[index + 1].Cost))
+        if (StageManager.Instance.IsEnoughCurrency(unitList[index + 1].cost))
         {
-            StageManager.Instance.UseCurrency(unitList[index+ 1].Cost);
-            GameObject item = ObjectPoolManager.Instance.GetObjPool(unitList[index + 1].UnitType.ToString(), MyUnitSpawnPoint, Quaternion.identity);
+            StageManager.Instance.UseCurrency(unitList[index + 1].cost);
+            GameObject item = ObjectPoolManager.Instance.GetObjPool(unitList[index + 1].unitID.ToString(), MyUnitSpawnPoint, Quaternion.identity);
             UnitInfo newUnit = item.GetComponent<UnitInfo>();
             if (newUnit == null)
             {
@@ -60,7 +60,7 @@ public class SpawnUnitManager : MonoBehaviour
             } 
 
             newUnit.SetSpawn(unitList[index + 1]);
-            myUnitList.Add(newUnit);
+            myUnitList.Add(newUnit); 
             newUnit.gameObject.SetActive(true);
         }
         else

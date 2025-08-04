@@ -54,34 +54,34 @@ public class UnitInfo : MonoBehaviour
     }
 
     // 오브젝트 풀에서 꺼낼 때 호출할 초기화
-    public void Initialize(UnitData data)
+    public void Initialize(UnitsData data)
     {
         gameObject.SetActive(true); // 풀에서 꺼낼 때 활성화
 
-        ID = data.UnitID;
-        moveSpeed = data.UnitSpeed;
-        attackDistance = data.AttackDistance;
-        curTarget = null;
-        attackDelay = 0f;
-        isAttack = false;
-        curHP = data.HP;
-        ATK = data.ATK;
+        //ID = data.UnitID;
+        //moveSpeed = data.UnitSpeed;
+        //attackDistance = data.AttackDistance;
+        //curTarget = null;
+        //attackDelay = 0f;
+        //isAttack = false;
+        //curHP = data.HP;
+        //ATK = data.ATK;
         anim.Rebind();       
         anim.Update(0f);
 
         ChangeState(walkState);
     }   
 
-    public void SetSpawn(UnitData data)
+    public void SetSpawn(UnitsData data)
     {
-        ID = data.UnitID;
-        moveSpeed = data.UnitSpeed;
-        attackDistance = data.AttackDistance;
+        ID = data.unitID;
+        moveSpeed = data.unitSpeed;
+        attackDistance = data.attackDistance;
         attackCT = 2f;
         curTarget = null;
-        curHP = data.HP;
-        ATK = data.ATK;
-        unitType = (eUnitType)data.UnitType;
+        curHP = data.hp;
+        ATK = data.atk;
+        unitType = (eUnitType)data.unitType;
         weapon.SetWeapon(unitType, this);
         ChangeState(walkState);
 

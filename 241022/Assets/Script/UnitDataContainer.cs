@@ -88,8 +88,8 @@ namespace Unit
                 IsMyUnit = isMine;
             }
         }
-
-        Dictionary<int, UnitData> allUnit = new Dictionary<int, UnitData>();
+        [SerializeField] UnitsDataList unitsDataList;
+        Dictionary<int, UnitsData> allUnit = new Dictionary<int, UnitsData>();
 
         private void Awake()
         {
@@ -106,20 +106,15 @@ namespace Unit
 
         private void Start()
         {
+            unitsDataList.Init();
             // 테이블 모든 유닛 데이터 가져오기
-            foreach (var item in DataClass.UnitTable_UnitDataTData)
+            foreach (var item in unitsDataList.GetAllUnitData())
             {
-                UnitData unitData = null;
                 if (!allUnit.ContainsKey(item.Key))
                 {
-                    unitData = new UnitData (item.Key, item.Value.UnitSpeed, item.Value.UnitName, item.Value.ATK, item.Value.DEF, item.Value.HP, item.Value.Cost, item.Value.AttackDistance, item.Value.PrefabPath, item.Value.PortraitPath);
-                    allUnit.Add(item.Key, unitData);
+                    allUnit.Add(item.Key, item.Value);
                 }
             }
         }
-
-       
     }
-
-
 }

@@ -4,20 +4,21 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "UnitsData", menuName = "Game Data/UnitsData")]
 public class UnitsData : ScriptableObject
 {
-    public enum LockOnType
+    public enum eLockOnType
     {
         None,
     }
 
     public enum eUnitType
     {
-        Swordsman = 1,
-        Barbarian,
-        Magician,
-        Bower,
-        Knight,
+        SwordMaster_mine = 1,
+        Barbarian_mine,
+        Magician_mine,
+        Archer_mine,
+        Knight_mine,
     }
 
+    public int unitID;
     public float unitSpeed;
     public string unitName;
     public int atk;
@@ -25,7 +26,8 @@ public class UnitsData : ScriptableObject
     public int hp;
     public int cost;
     public float attackDistance;
-    public LockOnType lockOnType;
+    public eLockOnType lockOnType;
     public string prefabPath;
     public string portraitPath;
+    public eUnitType unitType;
 }

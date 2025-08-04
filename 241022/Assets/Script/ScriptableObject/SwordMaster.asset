@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f9a049a2f4aab4092734c1315ef80d, type: 3}
   m_Name: SwordMaster
   m_EditorClassIdentifier: 
+  unitID: 1
   unitSpeed: 1.3
   unitName: "\uC804\uC0AC"
   atk: 3

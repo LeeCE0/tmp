@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ObjectPoolManager;
 
 public class ObjectPoolManager : MonoBehaviour
 {
@@ -45,6 +46,38 @@ public class ObjectPoolManager : MonoBehaviour
             poolDictionary.Add(pool.tag, objectPool);
         }
     }
+
+    public void AddUnitPool(Dictionary<int, UnitsData> units)
+    {
+        foreach (var kvp in units)
+        {
+            UnitsData unitData = kvp.Value;
+            string tag = unitData.unitType.ToString();
+
+            if (poolDictionary.ContainsKey(tag))
+                continue;
+
+            GameObject prefab = Resources.Load<GameObject>(unitData.prefabPath);
+            if (prefab == null)
+            {
+                Debug.LogWarning($"[PoolManager] {unitData.unitName} 프리팹을 찾을 수 없습니다. 경로: {unitData.prefabPath}");
+                continue;
+            }
+
+            Queue<GameObject> objectPool = new Queue<GameObject>();
+
+            int poolSize = 3; 
+            for (int i = 0; i < poolSize; i++)
+            {
+                GameObject obj = Instantiate(prefab);
+                obj.SetActive(false);
+                objectPool.Enqueue(obj);
+            }
+
+            poolDictionary.Add(tag, objectPool);
+        }
+    }
+
     public void AddPool(string tag, GameObject prefab, int size)
     {
         prefab.transform.SetParent(gameObject.transform);

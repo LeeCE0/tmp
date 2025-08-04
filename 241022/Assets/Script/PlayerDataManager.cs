@@ -19,19 +19,31 @@ public class PlayerDataManager : MonoBehaviour
             return instance;
         }
     }
-    Dictionary<int, UnitData> myUnit = new Dictionary<int, UnitData>();
+    Dictionary<int, UnitsData> myUnit = new Dictionary<int, UnitsData>();
+    [SerializeField] UnitsDataList unitsDataList;
+    Dictionary<int, UnitsData> allUnit = new Dictionary<int, UnitsData>();
 
 
     public void Start()
     {
         myUnit.Clear();
 
-        SpawnUnitManager.Instance.SetData();
+        unitsDataList.Init();
+        // 테이블 모든 유닛 데이터 가져오기
+        foreach (var item in unitsDataList.GetAllUnitData())
+        {
+            if (!allUnit.ContainsKey(item.Key))
+            {
+                allUnit.Add(item.Key, item.Value);
+            }
+        }
+        ObjectPoolManager.Instance.AddUnitPool(allUnit);
+        SpawnUnitManager.Instance.SetData();        
     }
 
-    public Dictionary<int, UnitData> GetAllUnit()
+    public Dictionary<int, UnitsData> GetAllUnit()
     {
-        return myUnit;
+        return allUnit;
     }
 
     #region UnitUnlockData
