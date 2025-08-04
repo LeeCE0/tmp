@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 namespace Unit
@@ -107,7 +108,7 @@ namespace Unit
         private void Start()
         {
             unitsDataList.Init();
-            // 테이블 모든 유닛 데이터 가져오기
+            // 모든 유닛 데이터 가져오기
             foreach (var item in unitsDataList.GetAllUnitData())
             {
                 if (!allUnit.ContainsKey(item.Key))
@@ -116,5 +117,11 @@ namespace Unit
                 }
             }
         }
-    }
+
+        public Dictionary<int, UnitsData> GetAllUnitData()
+        {
+            return allUnit;
+        }
 }
+
+    }

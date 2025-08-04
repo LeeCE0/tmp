@@ -66,7 +66,7 @@ public class Weapon : MonoBehaviour
     //원거리 (마법)
     private void LaunchFireball(GameObject start, Vector2 target, int dmg, UnitInfo targetUnit)
     {
-        GameObject bullet = ObjectPoolManager.Instance.GetObjPool("fireball", unit.gameObject, Quaternion.identity);
+        GameObject bullet = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Skill, unit.gameObject, Quaternion.identity);
         bullet.transform.position = start.transform.position;
 
         Bullet bulletData = bullet.GetComponent<Bullet>();

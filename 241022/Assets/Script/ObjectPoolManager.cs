@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ObjectPoolManager;
 
 public class ObjectPoolManager : MonoBehaviour
 {
@@ -16,21 +15,30 @@ public class ObjectPoolManager : MonoBehaviour
         }
     }
 
-    private Dictionary<string, Queue<GameObject>> poolDictionary = new Dictionary<string, Queue<GameObject>>();
+    public enum ePoolingObj
+    {
+        MyUnit,
+        Arrow,
+        Skill,
+        Enemy,
+        Max,
+    }
+
 
     [System.Serializable]
     public class Pool
     {
-        public string tag;       
+        public ePoolingObj tag;
         public GameObject prefab;  
-        public int size;           
+        public int size;
     }
 
     [SerializeField] private List<Pool> pools;
+    private Dictionary<ePoolingObj, Queue<GameObject>> poolDictionary;
 
     private void Awake()
     {
-        poolDictionary = new Dictionary<string, Queue<GameObject>>();
+        poolDictionary = new Dictionary<ePoolingObj, Queue<GameObject>>();
 
         foreach (Pool pool in pools)
         {
@@ -38,7 +46,7 @@ public class ObjectPoolManager : MonoBehaviour
 
             for (int i = 0; i < pool.size; i++)
             {
-                GameObject obj = Instantiate(pool.prefab);
+                GameObject obj = Instantiate(pool.prefab, transform);
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
@@ -47,90 +55,44 @@ public class ObjectPoolManager : MonoBehaviour
         }
     }
 
-    public void AddUnitPool(Dictionary<int, UnitsData> units)
+    public GameObject SpawnFromPool(ePoolingObj type, GameObject pos, Quaternion rotation)
     {
-        foreach (var kvp in units)
+        if (!poolDictionary.ContainsKey(type))
         {
-            UnitsData unitData = kvp.Value;
-            string tag = unitData.unitType.ToString();
-
-            if (poolDictionary.ContainsKey(tag))
-                continue;
-
-            GameObject prefab = Resources.Load<GameObject>(unitData.prefabPath);
-            if (prefab == null)
-            {
-                Debug.LogWarning($"[PoolManager] {unitData.unitName} 프리팹을 찾을 수 없습니다. 경로: {unitData.prefabPath}");
-                continue;
-            }
-
-            Queue<GameObject> objectPool = new Queue<GameObject>();
-
-            int poolSize = 3; 
-            for (int i = 0; i < poolSize; i++)
-            {
-                GameObject obj = Instantiate(prefab);
-                obj.SetActive(false);
-                objectPool.Enqueue(obj);
-            }
-
-            poolDictionary.Add(tag, objectPool);
-        }
-    }
-
-    public void AddPool(string tag, GameObject prefab, int size)
-    {
-        prefab.transform.SetParent(gameObject.transform);
-        if (!poolDictionary.ContainsKey(tag))
-        {
-            Queue<GameObject> objectPool = new Queue<GameObject>();
-
-            for (int i = 0; i < size; i++)
-            {
-                GameObject obj = Instantiate(prefab);
-                obj.SetActive(false);
-                objectPool.Enqueue(obj);
-            }
-
-            poolDictionary.Add(tag, objectPool);
-        }
-        else
-        {
-            Debug.LogWarning($"Pool with tag {tag} already exists!");
-        }
-    }
-
-
-    public GameObject GetObjPool(string tag, GameObject parent, Quaternion rotation)
-    {
-        if (!poolDictionary.ContainsKey(tag))
-        {
-            Debug.LogError($"Pool with tag {tag} doesn't exist.");
+            Debug.LogError($"Pool with tag {type} doesn't exist.");
             return null;
         }
 
-        GameObject poolOBJ = poolDictionary[tag].Count > 0
-            ? poolDictionary[tag].Dequeue()
-            : Instantiate(pools.Find(x => x.tag == tag).prefab);
+        GameObject obj;
 
-        poolOBJ.SetActive(true);
-        poolOBJ.transform.position = parent.transform.position;
-        poolOBJ.transform.rotation = rotation;
-        //poolOBJ.transform.parent = parent.transform;
+        // 풀에 남은 오브젝트가 없으면 동적 확장
+        if (poolDictionary[type].Count == 0)
+        {
+            Pool pool = pools.Find(p => p.tag == type);
+            obj = Instantiate(pool.prefab, transform);
+        }
+        else
+        {
+            obj = poolDictionary[type].Dequeue();
+        }
 
-        return poolOBJ;
+        obj.SetActive(true);
+        obj.transform.SetPositionAndRotation(pos.transform.position, rotation);
+        return obj;
     }
 
-    public void ReturnToPool(string tag, GameObject obj)
+    public void ReturnToPool(ePoolingObj type, GameObject obj)
     {
         obj.SetActive(false);
-        obj.transform.SetParent(gameObject.transform);
-        if (!poolDictionary.ContainsKey(tag))
+        obj.transform.SetParent(transform);
+
+        if (!poolDictionary.ContainsKey(type))
         {
-            Debug.LogError($"Pool with tag {tag} doesn't exist.");
+            Debug.LogError($"Pool with tag {type} doesn't exist.");
+            Destroy(obj);
             return;
         }
 
-        poolDictionary[tag].Enqueue(obj);
+        poolDictionary[type].Enqueue(obj);
     }
 }

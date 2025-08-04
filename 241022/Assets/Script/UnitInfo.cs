@@ -139,7 +139,7 @@ public class UnitInfo : MonoBehaviour
     public void Deactivate()
     {
         string tag = isMyUnit ? ID.ToString() : "Enemy";
-        ObjectPoolManager.Instance.ReturnToPool(tag, gameObject);
+        ObjectPoolManager.Instance.ReturnToPool(ObjectPoolManager.ePoolingObj.MyUnit, gameObject);
     }
 }
 

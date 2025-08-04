@@ -29,5 +29,5 @@ public class UnitsData : ScriptableObject
     public eLockOnType lockOnType;
     public string prefabPath;
     public string portraitPath;
-    public eUnitType unitType;
+    public eUnitType unitType; 
 }

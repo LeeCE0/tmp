@@ -39,7 +39,7 @@ public class SpawnUnitManager : MonoBehaviour
     public void SetData()
     {
         unitList.Clear();
-        unitList = PlayerDataManager.Instance.GetAllUnit();
+        unitList = UnitDataContainer.Instance.GetAllUnitData();
 
         for (int i = 0; i < unitBtn.Length; i++)
         {
@@ -51,7 +51,7 @@ public class SpawnUnitManager : MonoBehaviour
         if (StageManager.Instance.IsEnoughCurrency(unitList[index + 1].cost))
         {
             StageManager.Instance.UseCurrency(unitList[index + 1].cost);
-            GameObject item = ObjectPoolManager.Instance.GetObjPool(unitList[index + 1].unitID.ToString(), MyUnitSpawnPoint, Quaternion.identity);
+            GameObject item = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.MyUnit, MyUnitSpawnPoint, Quaternion.identity);
             UnitInfo newUnit = item.GetComponent<UnitInfo>();
             if (newUnit == null)
             {
@@ -87,7 +87,7 @@ public class SpawnUnitManager : MonoBehaviour
 
     private void SpawnUnitFromPool()
     {
-        GameObject unit = ObjectPoolManager.Instance.GetObjPool("Enemy", EnemyUnitSpawnPoint, Quaternion.identity);
+        GameObject unit = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Enemy, EnemyUnitSpawnPoint, Quaternion.identity);
         UnitInfo newUnit = unit.GetComponent<UnitInfo>();
 
         //newUnit.SetSpawn(GetRandomUnitData());

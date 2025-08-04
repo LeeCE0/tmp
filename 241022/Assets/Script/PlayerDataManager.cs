@@ -1,11 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Unity.VisualScripting;
 using UnityEngine;
-using static Unit.UnitDataContainer;
 
 public class PlayerDataManager : MonoBehaviour
 {
@@ -19,25 +15,14 @@ public class PlayerDataManager : MonoBehaviour
             return instance;
         }
     }
-    Dictionary<int, UnitsData> myUnit = new Dictionary<int, UnitsData>();
-    [SerializeField] UnitsDataList unitsDataList;
+
     Dictionary<int, UnitsData> allUnit = new Dictionary<int, UnitsData>();
 
 
     public void Start()
     {
-        myUnit.Clear();
-
-        unitsDataList.Init();
-        // 테이블 모든 유닛 데이터 가져오기
-        foreach (var item in unitsDataList.GetAllUnitData())
-        {
-            if (!allUnit.ContainsKey(item.Key))
-            {
-                allUnit.Add(item.Key, item.Value);
-            }
-        }
-        ObjectPoolManager.Instance.AddUnitPool(allUnit);
+        allUnit.Clear();
+       
         SpawnUnitManager.Instance.SetData();        
     }
 

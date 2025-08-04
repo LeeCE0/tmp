@@ -21,8 +21,8 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         if (target == null)
-        { 
-            ObjectPoolManager.Instance.ReturnToPool("fireball", gameObject);
+        {
+            ObjectPoolManager.Instance.ReturnToPool(ObjectPoolManager.ePoolingObj.Skill, gameObject);
             return;
         }
 
@@ -32,7 +32,7 @@ public class Bullet : MonoBehaviour
         if (Vector3.Distance(transform.position, targetVector) < 0.2f)
         {
             target.TakeDMG(atk);
-            ObjectPoolManager.Instance.ReturnToPool("fireball", gameObject);
+            ObjectPoolManager.Instance.ReturnToPool(ObjectPoolManager.ePoolingObj.Skill, gameObject);
         }
     }
 }
