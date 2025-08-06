@@ -3464,7 +3464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pools:
   - tag: 0
-    prefab: {fileID: 5817957301988036256, guid: b6c9c2aa3a5ccf5409e12a4d887fa0ce, type: 3}
+    prefab: {fileID: 5692327168834826477, guid: 290f57bf0f90545ffac98ff979ebffcf, type: 3}
     size: 5
   - tag: 3
     prefab: {fileID: 7154700476304014582, guid: 25c5c0dfe589a4611951bbaaeee802a6, type: 3}
