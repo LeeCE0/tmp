@@ -18,16 +18,16 @@ public class SpawnUnitManager : MonoBehaviour
     }
 
     [SerializeField] UnitSlot[] unitBtn;
-    [SerializeField] UnitInfo myUnit;
-    [SerializeField] UnitInfo enemyUnit;
+    [SerializeField] UnitBase myUnit;
+    [SerializeField] UnitBase enemyUnit;
     [SerializeField] GameObject MyUnitSpawnPoint;
     [SerializeField] GameObject EnemyUnitSpawnPoint;
     [SerializeField] public NexusInfo myNexus;
     [SerializeField] public NexusInfo enemyNexus;
 
     Dictionary<int, UnitsData> unitList = new Dictionary<int, UnitsData>();   // 뽑을 수 있는 유닛 리스트
-    public List<UnitInfo> myUnitList = new List<UnitInfo>();   // 필드에 소환되어있는 유닛
-    public List<UnitInfo> enemyUnitList = new List<UnitInfo>();  //필드에 소환되어있는 적 유닛
+    public List<UnitBase> myUnitList = new List<UnitBase>();   // 필드에 소환되어있는 유닛
+    public List<UnitBase> enemyUnitList = new List<UnitBase>();  //필드에 소환되어있는 적 유닛
 
 
 
@@ -52,7 +52,7 @@ public class SpawnUnitManager : MonoBehaviour
         {
             StageManager.Instance.UseCurrency(unitList[index + 1].cost);
             GameObject item = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.MyUnit, MyUnitSpawnPoint, Quaternion.identity);
-            UnitInfo newUnit = item.GetComponent<UnitInfo>();
+            UnitBase newUnit = item.GetComponent<UnitBase>();
             if (newUnit == null)
             {
                 Debug.LogError("no component : UnitInfo");
@@ -88,7 +88,7 @@ public class SpawnUnitManager : MonoBehaviour
     private void SpawnUnitFromPool()
     {
         GameObject unit = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Enemy, EnemyUnitSpawnPoint, Quaternion.identity);
-        UnitInfo newUnit = unit.GetComponent<UnitInfo>();
+        UnitBase newUnit = unit.GetComponent<UnitBase>();
 
         //newUnit.SetSpawn(GetRandomUnitData());
         enemyUnitList.Add(newUnit);

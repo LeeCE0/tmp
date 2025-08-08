@@ -6,11 +6,11 @@ public class Bullet : MonoBehaviour
 {
     public int atk;
     public float speed;
-    public UnitInfo target;
+    public UnitBase target;
     private Vector3 targetVector;
 
 
-    public void Init(int dmg, UnitInfo targetUnit)
+    public void Init(int dmg, UnitBase targetUnit)
     {
         atk = dmg;
         target = targetUnit;

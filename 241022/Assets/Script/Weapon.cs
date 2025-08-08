@@ -24,7 +24,7 @@ public class Weapon : MonoBehaviour
     public bool isMeeleeType = false;
     private bool isRunning = false;
     public bool isAttack = false;
-    public UnitInfo unit;
+    public UnitBase unit;
      
     
     //원거리 (화살)
@@ -64,7 +64,7 @@ public class Weapon : MonoBehaviour
     }
 
     //원거리 (마법)
-    private void LaunchFireball(GameObject start, Vector2 target, int dmg, UnitInfo targetUnit)
+    private void LaunchFireball(GameObject start, Vector2 target, int dmg, UnitBase targetUnit)
     {
         GameObject bullet = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Skill, unit.gameObject, Quaternion.identity);
         bullet.transform.position = start.transform.position;
@@ -74,21 +74,21 @@ public class Weapon : MonoBehaviour
     }
 
     //근거리
-    private void AttackSword(UnitInfo target, int dmg)
+    private void AttackSword(UnitBase target, int dmg)
     {
         target.TakeDMG(dmg);
     }
 
     //유닛 무기 정보 설정하기
-    public void SetWeapon(eUnitType unitType, UnitInfo units)
+    public void SetWeapon(eUnitType unitType, UnitBase units)
     {
         unit = units;
         switch (unitType)
         {
-            case eUnitType.Swordsman:
+            case eUnitType.Swordmaster:
                 weaponType = eWeaponType.Sword;
                 break;
-            case eUnitType.Bower:
+            case eUnitType.Archer:
                 weaponType = eWeaponType.Bow;
                 break;
             case eUnitType.Magician:
@@ -101,7 +101,7 @@ public class Weapon : MonoBehaviour
     }
 
     //공격 모드
-    public void StartAttack(int dmg, UnitInfo target)
+    public void StartAttack(int dmg, UnitBase target)
     {
         isAttack = true;
         switch (weaponType)

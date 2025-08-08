@@ -13,10 +13,10 @@ public interface IUnitState
 
 public class WalkState : IUnitState
 {
-    private UnitInfo unit;
+    private UnitBase unit;
     public eUnitState StateType => eUnitState.Walk;
 
-    public WalkState(UnitInfo unit) => this.unit = unit;
+    public WalkState(UnitBase unit) =>  this.unit = unit;
 
     public void Enter()
     {
@@ -28,7 +28,7 @@ public class WalkState : IUnitState
     {
         if (unit.curTarget == null)
         {
-            unit.anim.SetFloat("RunState", 0.5f);
+            unit.anim.SetBool("Move", true);
             float dir = unit.isMyUnit ? 1f : -1f;
             unit.transform.Translate(Vector2.right * dir * unit.moveSpeed * Time.deltaTime);
              
@@ -55,16 +55,16 @@ public class WalkState : IUnitState
 
     public void Exit()
     {
-        unit.anim.SetFloat("RunState", 0f);
+        unit.anim.SetBool("Move", false);
     }
 }
 
 public class AttackState : IUnitState
 {
-    private UnitInfo unit;
+    private UnitBase unit;
     public eUnitState StateType => eUnitState.Attack;
 
-    public AttackState(UnitInfo unit) => this.unit = unit;
+    public AttackState(UnitBase unit) => this.unit = unit;
 
     public void Enter()
     {
@@ -98,23 +98,17 @@ public class AttackState : IUnitState
     {
         if (unit.curTarget == null) return;
         unit.anim.SetTrigger("Attack");
-        unit.anim.SetFloat("AttackState", 0f);
+        //unit.anim.SetFloat("AttackState", 0f);
 
         unit.weapon.StartAttack(unit.ATK, unit.curTarget);
-
+        unit.anim.SetBool("isMoving", false);
         switch (unit.unitType)
         {
-            case eUnitType.Swordsman:
-                unit.anim.SetFloat("NormalState", 0f);
-                unit.anim.SetFloat("RunState", 0f);
+            case eUnitType.Swordmaster:
                 break;
-            case eUnitType.Bower:
-                unit.anim.SetFloat("NormalState", 0.5f);
-                unit.anim.SetFloat("RunState", 0f);
+            case eUnitType.Archer:
                 break;
             case eUnitType.Magician:
-                unit.anim.SetFloat("NormalState", 1.0f);
-                unit.anim.SetFloat("RunState", 0f);
                 break;
         }
     }
@@ -122,8 +116,8 @@ public class AttackState : IUnitState
 public class DeadState : IUnitState
 {
     public eUnitState StateType => eUnitState.Dead;
-    private UnitInfo unit;
-     public DeadState(UnitInfo unit) => this.unit = unit;
+    private UnitBase unit;
+     public DeadState(UnitBase unit) => this.unit = unit;
     public void Enter()
     {
         unit.anim.SetTrigger("Die");
@@ -151,10 +145,10 @@ public class DeadState : IUnitState
 
 public class NexusAttackState : IUnitState
 {
-    private UnitInfo unit;
+    private UnitBase unit;
     private NexusInfo nexus;
 
-    public NexusAttackState(UnitInfo unit, NexusInfo nexus)
+    public NexusAttackState(UnitBase unit, NexusInfo nexus)
     {
         this.unit = unit;
         this.nexus = nexus;

@@ -27,11 +27,16 @@ namespace Unit
 
         public enum eUnitType
         {
-            Swordsman = 1,
+            Swordmaster = 1,
             Barbarian,
             Magician,
-            Bower,
+            Archer,
             Knight,
+            Bishop,
+            Summoner,
+            Shieldbearer,
+            Assassin,
+            Cavalry
         }
 
 

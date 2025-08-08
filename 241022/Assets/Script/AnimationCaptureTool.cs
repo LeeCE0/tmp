@@ -15,13 +15,14 @@ public class AnimationCaptureTool : MonoBehaviour
 
     [Header("🎞 Animation Capture Settings")]
     public float captureDuration = 1.0f;
-    public float frameRate = 12f;
-    public int textureWidth = 64;
-    public int textureHeight = 64;
+    public float frameRate = 24f;
+    public int textureWidth = 256;
+    public int textureHeight = 256;
 
     [Header("💾 Save Settings")]
     public string UnitName = "";
     public string outputFolder = "Assets/AnimationCaptures";
+    public string sheetSavePath = "Assets/Resources/Animation";
 
     private RenderTexture rt;
 
@@ -75,7 +76,7 @@ public class AnimationCaptureTool : MonoBehaviour
             cpuCopy.Apply();
 
             // 4️⃣ PNG 저장
-            string filename = Path.Combine(dir, $"frame_{frameCount:D3}.png");
+            string filename = Path.Combine(dir, $"{UnitName}_{animationStateName}_{frameCount:D3}.png");
             File.WriteAllBytes(filename, cpuCopy.EncodeToPNG());
 
             // 5️⃣ 메모리 정리
@@ -86,7 +87,7 @@ public class AnimationCaptureTool : MonoBehaviour
             timeElapsed += interval;
             yield return new WaitForSeconds(interval);
         }
-
+         
 
         captureCamera.targetTexture = null;
         RenderTexture.active = null;
@@ -100,7 +101,7 @@ public class AnimationCaptureTool : MonoBehaviour
 
     public void BuildSpriteSheet(int framesPerRow = 0)
     {
-        string dir = Path.Combine(outputFolder, animationStateName);
+        string dir = Path.Combine(outputFolder, UnitName, animationStateName);
         string[] files = Directory.GetFiles(dir, "*.png");
         if (files.Length == 0)
         {
@@ -135,7 +136,7 @@ public class AnimationCaptureTool : MonoBehaviour
 
         spriteSheet.Apply();
 
-        string outputPath = Path.Combine(dir, $"spritesheet_{animationStateName}.png");
+        string outputPath = Path.Combine(sheetSavePath, UnitName, $"{UnitName}_{animationStateName}.png");
         File.WriteAllBytes(outputPath, spriteSheet.EncodeToPNG());
 
         Debug.Log($"🧩 스프라이트 시트 저장 완료: {outputPath}");
