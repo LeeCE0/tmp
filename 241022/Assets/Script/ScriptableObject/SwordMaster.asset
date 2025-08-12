@@ -21,5 +21,7 @@ MonoBehaviour:
   cost: 20
   attackDistance: 2
   lockOnType: 0
-  prefabPath: Sword
-  portraitPath: Portraits/Swordsman
+  spriteImg: {fileID: 21300000, guid: c848c87afaaf6dc42bdc91a0eeed296c, type: 3}
+  portraitImg: {fileID: 21300000, guid: c848c87afaaf6dc42bdc91a0eeed296c, type: 3}
+  animCtrl: {fileID: 9100000, guid: 246a014148f800f4998aa43587813905, type: 2}
+  unitType: 1

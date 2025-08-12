@@ -8,10 +8,20 @@ using System.Collections.Generic;
 
 public class AnimationCaptureTool : MonoBehaviour
 {
+    public enum eAnimString
+    {
+        IDLE,
+        MOVE,
+        ATTACK,
+        DEATH
+    }
+
     [Header("📷 Capture Target")]
     public Camera captureCamera;
     public Animator targetAnimator;
-    public string animationStateName = "Idle";
+    //public string animationStateName = "Idle";
+    public eAnimString animState;
+    public AnimationClip clip;
 
     [Header("🎞 Animation Capture Settings")]
     public float captureDuration = 1.0f;
@@ -39,14 +49,19 @@ public class AnimationCaptureTool : MonoBehaviour
             yield break;
         }
 
-        string dir = Path.Combine(outputFolder, UnitName, animationStateName);
+        string dir = Path.Combine(outputFolder, UnitName, animState.ToString());
         if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
         rt = new RenderTexture(textureWidth, textureHeight, 24, RenderTextureFormat.ARGB32);
         captureCamera.targetTexture = rt;
         RenderTexture.active = rt;
-
-        targetAnimator.Play(animationStateName, 0, 0f);
+        if(clip != null)
+        {
+            var overrideController = new AnimatorOverrideController(targetAnimator.runtimeAnimatorController);            
+            overrideController[animState.ToString()] = clip;
+            targetAnimator.runtimeAnimatorController = overrideController;
+        }
+        targetAnimator.Play(animState.ToString(), 0, 0f);
         targetAnimator.Update(0f);
 
         float timeElapsed = 0f;
@@ -76,7 +91,7 @@ public class AnimationCaptureTool : MonoBehaviour
             cpuCopy.Apply();
 
             // 4️⃣ PNG 저장
-            string filename = Path.Combine(dir, $"{UnitName}_{animationStateName}_{frameCount:D3}.png");
+            string filename = Path.Combine(dir, $"{UnitName}_{animState}_{frameCount:D3}.png");
             File.WriteAllBytes(filename, cpuCopy.EncodeToPNG());
 
             // 5️⃣ 메모리 정리
@@ -101,7 +116,7 @@ public class AnimationCaptureTool : MonoBehaviour
 
     public void BuildSpriteSheet(int framesPerRow = 0)
     {
-        string dir = Path.Combine(outputFolder, UnitName, animationStateName);
+        string dir = Path.Combine(outputFolder, UnitName, animState.ToString());
         string[] files = Directory.GetFiles(dir, "*.png");
         if (files.Length == 0)
         {
@@ -136,7 +151,11 @@ public class AnimationCaptureTool : MonoBehaviour
 
         spriteSheet.Apply();
 
-        string outputPath = Path.Combine(sheetSavePath, UnitName, $"{UnitName}_{animationStateName}.png");
+        string outputPath = Path.Combine(sheetSavePath, UnitName, $"{UnitName}_{animState}.png");
+        string path = Path.GetDirectoryName(outputPath);
+
+        // 폴더 생성
+        Directory.CreateDirectory(path);
         File.WriteAllBytes(outputPath, spriteSheet.EncodeToPNG());
 
         Debug.Log($"🧩 스프라이트 시트 저장 완료: {outputPath}");
@@ -144,6 +163,21 @@ public class AnimationCaptureTool : MonoBehaviour
 #if UNITY_EDITOR
         AssetDatabase.Refresh();
 #endif
+    }
+
+    public void TestAnimPlay()
+    {
+        if (clip != null)
+        {
+            var overrideController = new AnimatorOverrideController(targetAnimator.runtimeAnimatorController);
+            overrideController[animState.ToString()] = clip;
+            targetAnimator.runtimeAnimatorController = overrideController;
+        }
+        
+        targetAnimator.SetBool("1_Move", animState == eAnimString.MOVE);
+        targetAnimator.Play(animState.ToString(), 0, 0f);
+        targetAnimator.Update(0f);
+
     }
 
 #if UNITY_EDITOR
@@ -157,7 +191,19 @@ public class AnimationCaptureTool : MonoBehaviour
             GUILayout.Label("🎯 Capture Target", EditorStyles.boldLabel);
             tool.captureCamera = (Camera)EditorGUILayout.ObjectField("Capture Camera", tool.captureCamera, typeof(Camera), true);
             tool.targetAnimator = (Animator)EditorGUILayout.ObjectField("Target Animator", tool.targetAnimator, typeof(Animator), true);
-            tool.animationStateName = EditorGUILayout.TextField("Animation State Name", tool.animationStateName);
+            //tool.animationStateName = EditorGUILayout.TextField("Animation State Name", tool.animationStateName);
+            var newEnum = (eAnimString)EditorGUILayout.EnumPopup("Anim State", tool.animState);
+
+            if (newEnum != tool.animState)
+            {
+                Undo.RecordObject(tool, "Change Anim State");
+                tool.animState = newEnum;
+                EditorUtility.SetDirty(tool);
+            }
+
+            tool.clip = (AnimationClip)EditorGUILayout.ObjectField("Animation Clip", tool.clip, typeof(AnimationClip), true);
+
+
 
             EditorGUILayout.Space();
             GUILayout.Label("🎞 Animation Settings", EditorStyles.boldLabel);
@@ -171,7 +217,7 @@ public class AnimationCaptureTool : MonoBehaviour
             tool.UnitName = EditorGUILayout.TextField("Unit Name", tool.UnitName);
             tool.outputFolder = EditorGUILayout.TextField("Output Folder", tool.outputFolder);
 
-            EditorGUILayout.HelpBox($"Output Path: {tool.outputFolder}/{"UnitName"}/{tool.animationStateName}", MessageType.Info);
+            EditorGUILayout.HelpBox($"Output Path: {tool.outputFolder}/{"UnitName"}/{tool.animState}", MessageType.Info);
 
             EditorGUILayout.Space();
             GUI.backgroundColor = Color.green;
@@ -186,6 +232,14 @@ public class AnimationCaptureTool : MonoBehaviour
             if (GUILayout.Button("🧩 스프라이트 시트 생성", GUILayout.Height(30)))
             {
                 tool.BuildSpriteSheet(8);
+            }
+            GUI.backgroundColor = Color.white;
+
+            EditorGUILayout.Space();
+            GUI.backgroundColor = Color.honeydew;
+            if (GUILayout.Button("애니메이션 테스트 플레이", GUILayout.Height(30)))
+            {
+                tool.TestAnimPlay();
             }
             GUI.backgroundColor = Color.white;
         }

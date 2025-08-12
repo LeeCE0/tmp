@@ -33,7 +33,6 @@ public class SpawnUnitManager : MonoBehaviour
 
     public void Start()
     {
-        StartCoroutine(SpawnLoop());
     }
 
     public void SetData()
@@ -45,13 +44,16 @@ public class SpawnUnitManager : MonoBehaviour
         {
             unitBtn[i].SetData(i, SpawnUnit);
         }
+
+
+        StartCoroutine(SpawnLoop());
     }
     public void SpawnUnit(int index)
     {
         if (StageManager.Instance.IsEnoughCurrency(unitList[index + 1].cost))
         {
             StageManager.Instance.UseCurrency(unitList[index + 1].cost);
-            GameObject item = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.MyUnit, MyUnitSpawnPoint, Quaternion.identity);
+            GameObject item = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.MyUnit, MyUnitSpawnPoint, Quaternion.identity, MyUnitSpawnPoint);
             UnitBase newUnit = item.GetComponent<UnitBase>();
             if (newUnit == null)
             {
@@ -87,10 +89,13 @@ public class SpawnUnitManager : MonoBehaviour
 
     private void SpawnUnitFromPool()
     {
-        GameObject unit = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Enemy, EnemyUnitSpawnPoint, Quaternion.identity);
+        GameObject unit = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Enemy, EnemyUnitSpawnPoint, Quaternion.identity, EnemyUnitSpawnPoint);
         UnitBase newUnit = unit.GetComponent<UnitBase>();
 
-        //newUnit.SetSpawn(GetRandomUnitData());
+       
+        newUnit.SetSpawn(unitList[1]);
+        newUnit.isMyUnit = false;
+        newUnit.SetUnit();
         enemyUnitList.Add(newUnit);
 
         unit.transform.position = EnemyUnitSpawnPoint.transform.position;
@@ -102,20 +107,5 @@ public class SpawnUnitManager : MonoBehaviour
     {
 
     }
-
-
-    //private UnitData GetRandomUnitData()
-    //{
-    //    return new UnitData(
-    //        100,
-    //        1,
-    //        "",
-    //        2,
-    //        1,
-    //        10,
-    //        0,
-    //        2, null);
-    //}
-
 
 }

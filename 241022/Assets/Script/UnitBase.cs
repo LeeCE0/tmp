@@ -15,6 +15,7 @@ public class UnitBase : MonoBehaviour
     [SerializeField] public eUnitType unitType = eUnitType.Swordmaster;
     [SerializeField] Weapon.eWeaponType weaponType = Weapon.eWeaponType.Sword; 
     [SerializeField] public Weapon weapon;
+    [SerializeField] Sprite image;
 
     [SerializeField] public Animator anim = new Animator();
 
@@ -54,18 +55,9 @@ public class UnitBase : MonoBehaviour
     }
 
     // 오브젝트 풀에서 꺼낼 때 호출할 초기화
-    public void Initialize(UnitsData data)
+    public void Initialize()
     {
-        gameObject.SetActive(true); // 풀에서 꺼낼 때 활성화
-
-        //ID = data.UnitID;
-        //moveSpeed = data.UnitSpeed;
-        //attackDistance = data.AttackDistance;
-        //curTarget = null;
-        //attackDelay = 0f;
-        //isAttack = false;
-        //curHP = data.HP;
-        //ATK = data.ATK;
+        gameObject.SetActive(true); 
         anim.Rebind();       
         anim.Update(0f);
 
@@ -84,6 +76,13 @@ public class UnitBase : MonoBehaviour
         unitType = (eUnitType)data.unitType;
         weapon.SetWeapon(unitType, this);
         ChangeState(walkState);
+
+
+        //스프라이트 교체
+        image = data.spriteImg;
+
+        //애니메이션 교체
+        anim.runtimeAnimatorController = data.animCtrl;
 
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Abs(scale.x) * (isMyUnit ? -1 : 1);
@@ -134,6 +133,13 @@ public class UnitBase : MonoBehaviour
 
         if (curHP <= 0)
             ChangeState(deadState);
+    }
+
+    public void SetUnit()
+    {
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x) * (isMyUnit ? -1 : 1);
+        transform.localScale = scale;
     }
 
     public void Deactivate()

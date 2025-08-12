@@ -55,7 +55,7 @@ public class ObjectPoolManager : MonoBehaviour
         }
     }
 
-    public GameObject SpawnFromPool(ePoolingObj type, GameObject pos, Quaternion rotation)
+    public GameObject SpawnFromPool(ePoolingObj type, GameObject pos, Quaternion rotation, GameObject parent = null)
     {
         if (!poolDictionary.ContainsKey(type))
         {
@@ -78,6 +78,9 @@ public class ObjectPoolManager : MonoBehaviour
 
         obj.SetActive(true);
         obj.transform.SetPositionAndRotation(pos.transform.position, rotation);
+
+        if (parent != null)
+            obj.transform.SetParent(parent.transform);
         return obj;
     }
 

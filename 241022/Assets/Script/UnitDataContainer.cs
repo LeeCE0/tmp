@@ -108,10 +108,8 @@ namespace Unit
             {
                 Destroy(gameObject); 
             }
-        }
 
-        private void Start()
-        {
+            
             unitsDataList.Init();
             // 모든 유닛 데이터 가져오기
             foreach (var item in unitsDataList.GetAllUnitData())
@@ -121,6 +119,10 @@ namespace Unit
                     allUnit.Add(item.Key, item.Value);
                 }
             }
+        }
+
+        private void Start()
+        {
         }
 
         public Dictionary<int, UnitsData> GetAllUnitData()

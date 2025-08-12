@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f9a049a2f4aab4092734c1315ef80d, type: 3}
   m_Name: Archer
   m_EditorClassIdentifier: 
-  unitID: 0
-  unitSpeed: 0
-  unitName: 
-  atk: 0
-  def: 0
-  hp: 0
-  cost: 0
-  attackDistance: 0
+  unitID: 2
+  unitSpeed: 1
+  unitName: "\uC544\uCC98"
+  atk: 1
+  def: 5
+  hp: 30
+  cost: 10
+  attackDistance: 4
   lockOnType: 0
-  prefabPath: 
-  portraitPath: 
-  unitType: 0
+  spriteImg: {fileID: 21300000, guid: 9bd1cac2a9db52d49acf9e73a8ed367d, type: 3}
+  portraitImg: {fileID: 21300000, guid: 9bd1cac2a9db52d49acf9e73a8ed367d, type: 3}
+  animCtrl: {fileID: 9100000, guid: 9e23832c1222f9248825d39e6ebc6877, type: 2}
+  unitType: 4

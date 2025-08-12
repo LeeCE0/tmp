@@ -28,7 +28,7 @@ public class WalkState : IUnitState
     {
         if (unit.curTarget == null)
         {
-            unit.anim.SetBool("Move", true);
+            unit.anim.SetBool("isMoving", true);
             float dir = unit.isMyUnit ? 1f : -1f;
             unit.transform.Translate(Vector2.right * dir * unit.moveSpeed * Time.deltaTime);
              
@@ -55,7 +55,7 @@ public class WalkState : IUnitState
 
     public void Exit()
     {
-        unit.anim.SetBool("Move", false);
+        unit.anim.SetBool("isMoving", false);
     }
 }
 
@@ -98,19 +98,9 @@ public class AttackState : IUnitState
     {
         if (unit.curTarget == null) return;
         unit.anim.SetTrigger("Attack");
-        //unit.anim.SetFloat("AttackState", 0f);
 
         unit.weapon.StartAttack(unit.ATK, unit.curTarget);
         unit.anim.SetBool("isMoving", false);
-        switch (unit.unitType)
-        {
-            case eUnitType.Swordmaster:
-                break;
-            case eUnitType.Archer:
-                break;
-            case eUnitType.Magician:
-                break;
-        }
     }
 }
 public class DeadState : IUnitState

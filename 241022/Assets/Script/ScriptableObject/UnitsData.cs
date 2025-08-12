@@ -1,3 +1,4 @@
+using UnityEditor.Animations;
 using UnityEngine;
 
 [System.Serializable]
@@ -27,7 +28,8 @@ public class UnitsData : ScriptableObject
     public int cost;
     public float attackDistance;
     public eLockOnType lockOnType;
-    public string prefabPath;
-    public string portraitPath;
+    public Sprite spriteImg;
+    public Sprite portraitImg;
+    public AnimatorController animCtrl;
     public eUnitType unitType; 
 }
