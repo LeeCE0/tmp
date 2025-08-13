@@ -1,13 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
     public int atk;
     public float speed;
     public UnitBase target;
     private Vector3 targetVector;
+
+    [SerializeField] Sprite arrowImg;
+    [SerializeField] Sprite fireballImg;
+
+
 
 
     public void Init(int dmg, UnitBase targetUnit)
@@ -18,11 +21,16 @@ public class Bullet : MonoBehaviour
         targetVector = target.transform.position;
         targetVector.y += 0.2f;
     }
+
+    public void SetProjectile()
+    {
+
+    }
     void Update()
     {
         if (target == null)
         {
-            ObjectPoolManager.Instance.ReturnToPool(ObjectPoolManager.ePoolingObj.Skill, gameObject);
+            ObjectPoolManager.Instance.ReturnToPool(ObjectPoolManager.ePoolingObj.Projectile, gameObject);
             return;
         }
 
@@ -32,7 +40,7 @@ public class Bullet : MonoBehaviour
         if (Vector3.Distance(transform.position, targetVector) < 0.2f)
         {
             target.TakeDMG(atk);
-            ObjectPoolManager.Instance.ReturnToPool(ObjectPoolManager.ePoolingObj.Skill, gameObject);
+            ObjectPoolManager.Instance.ReturnToPool(ObjectPoolManager.ePoolingObj.Projectile, gameObject);
         }
     }
 }

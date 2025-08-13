@@ -15,7 +15,7 @@ public class Weapon : MonoBehaviour
         Magic = 3, 
         Ax,
     }
-    [SerializeField] GameObject bulletOBJ;
+    [SerializeField] GameObject projectileOBJ;
     public eWeaponType weaponType = eWeaponType.None; // 무기 타입
     public Vector2 startPosition; // 시작 위치
     public Vector2 targetPosition; // 목표 위치
@@ -25,6 +25,7 @@ public class Weapon : MonoBehaviour
     private bool isRunning = false;
     public bool isAttack = false;
     public UnitBase unit;
+    public Sprite obImg;
      
     
     //원거리 (화살)
@@ -66,11 +67,11 @@ public class Weapon : MonoBehaviour
     //원거리 (마법)
     private void LaunchFireball(GameObject start, Vector2 target, int dmg, UnitBase targetUnit)
     {
-        GameObject bullet = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Skill, unit.gameObject, Quaternion.identity);
-        bullet.transform.position = start.transform.position;
+        GameObject projectile = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Projectile, unit.gameObject, Quaternion.identity);
+        projectile.transform.position = start.transform.position;
 
-        Bullet bulletData = bullet.GetComponent<Bullet>();
-        bulletData.Init(dmg, targetUnit);
+        Projectile projectileData = projectile.GetComponent<Projectile>();
+        projectileData.Init(dmg, targetUnit);
     }
 
     //근거리

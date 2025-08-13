@@ -18,8 +18,7 @@ public class ObjectPoolManager : MonoBehaviour
     public enum ePoolingObj
     {
         MyUnit,
-        Arrow,
-        Skill,
+        Projectile,
         Enemy,
         Max,
     }
