@@ -13,7 +13,7 @@ public class StageInfoPopup : MonoBehaviour, LoopScrollDataSource
     [SerializeField] LoopScrollRect mobScroll;
     [SerializeField] ButtonCustom startButton;
 
-    Dictionary <int, UnitData> mobList = new Dictionary<int, UnitData>(); 
+    Dictionary <int, UnitsData> mobList = new Dictionary<int, UnitsData>(); 
 
 
     public void OnClickStart()

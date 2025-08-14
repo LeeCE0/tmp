@@ -16,9 +16,9 @@ public class UnitInfoSlot : MonoBehaviour
     [SerializeField] Image costImage;
 
 
-    public void SetSlotData(UnitData data)
+    public void SetSlotData(UnitsData data)
     {
-        ID = data.UnitID;
-        costText.text = data.Cost.ToString("N0");
+        ID = data.unitID;
+        costText.text = data.cost.ToString("N0");
     }
 }

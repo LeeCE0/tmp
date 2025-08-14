@@ -10,7 +10,7 @@ public class MyUnitLayout : MonoBehaviour, LoopScrollDataSource
 {
     [SerializeField] LoopScrollRect scrollRect;
     [SerializeField] UnitInfoSlot unitSlot;
-    Dictionary<int, UnitData> unitList = new Dictionary<int, UnitData>();
+    Dictionary<int, UnitsData> unitList = new Dictionary<int, UnitsData>();
 
     public void Start()
     {

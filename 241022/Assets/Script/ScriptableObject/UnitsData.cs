@@ -31,5 +31,6 @@ public class UnitsData : ScriptableObject
     public Sprite spriteImg;
     public Sprite portraitImg;
     public AnimatorController animCtrl;
-    public eUnitType unitType; 
+    public eUnitType unitType;
+    public GameObject useProjectile;
 }

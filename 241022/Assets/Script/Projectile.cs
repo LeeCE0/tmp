@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Unit.UnitDataContainer;
 
 public class Projectile : MonoBehaviour
 {
@@ -11,8 +12,6 @@ public class Projectile : MonoBehaviour
     [SerializeField] Sprite fireballImg;
 
 
-
-
     public void Init(int dmg, UnitBase targetUnit)
     {
         atk = dmg;
@@ -22,8 +21,17 @@ public class Projectile : MonoBehaviour
         targetVector.y += 0.2f;
     }
 
-    public void SetProjectile()
+    public void SetProjectile(eUnitType type)
     {
+        switch(type)
+        {
+            case eUnitType.Magician:
+                break;
+            case eUnitType.Archer:
+                break;
+            case eUnitType.Bishop:
+                break;
+        }
 
     }
     void Update()
