@@ -15,7 +15,8 @@ public class UnitBase : MonoBehaviour
     [SerializeField] public eUnitType unitType = eUnitType.Swordmaster;
     [SerializeField] Weapon.eWeaponType weaponType = Weapon.eWeaponType.Sword; 
     [SerializeField] public Weapon weapon;
-    [SerializeField] Sprite image;
+    [SerializeField] SpriteRenderer image;
+    [SerializeField] HPbar hpImg;
 
     [SerializeField] public Animator anim = new Animator();
 
@@ -31,6 +32,7 @@ public class UnitBase : MonoBehaviour
     public bool isAttack = false;
 
     public int curHP;
+    public int maxHP;
 
     public int GetUnitID() { return ID; }
 
@@ -71,23 +73,19 @@ public class UnitBase : MonoBehaviour
         attackDistance = data.attackDistance;
         attackCT = 2f;
         curTarget = null;
+        maxHP = data.hp;
         curHP = data.hp;
         ATK = data.atk;
         unitType = (eUnitType)data.unitType;
         weapon.SetWeapon(unitType, this);
         ChangeState(walkState);
 
+        image.sprite = data.spriteImg;
+        image.flipX = isMyUnit;
 
-        //스프라이트 교체
-        image = data.spriteImg;
-
-        //애니메이션 교체
         anim.runtimeAnimatorController = data.animCtrl;
-
-        Vector3 scale = transform.localScale;
-        scale.x = Mathf.Abs(scale.x) * (isMyUnit ? -1 : 1);
-        transform.localScale = scale;
     }
+
     public float DistanceToTarget() =>
       curTarget == null ? float.MaxValue : Vector2.Distance(transform.position, curTarget.transform.position);
 
@@ -128,24 +126,16 @@ public class UnitBase : MonoBehaviour
     {
         if (curHP <= 0) return;
         curHP -= dmg;
-        //hpBar.SetFill((float)currentHP / maxHP);
+        hpImg.UpdateBar(curHP, maxHP);
         //ShowDamageText(damage);
 
         if (curHP <= 0)
             ChangeState(deadState);
     }
 
-    public void SetUnit()
-    {
-        Vector3 scale = transform.localScale;
-        scale.x = Mathf.Abs(scale.x) * (isMyUnit ? -1 : 1);
-        transform.localScale = scale;
-    }
-
     public void Deactivate()
     {
-        string tag = isMyUnit ? ID.ToString() : "Enemy";
-        ObjectPoolManager.Instance.ReturnToPool(ObjectPoolManager.ePoolingObj.MyUnit, gameObject);
+        ObjectPoolManager.Instance.ReturnToPool(isMyUnit ? ObjectPoolManager.ePoolingObj.MyUnit : ObjectPoolManager.ePoolingObj.Enemy, gameObject);
     }
 }
 

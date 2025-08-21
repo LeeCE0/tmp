@@ -59,8 +59,8 @@ public class SpawnUnitManager : MonoBehaviour
             {
                 Debug.LogError("no component : UnitInfo");
                 return;
-            } 
-
+            }
+            newUnit.isMyUnit = true;
             newUnit.SetSpawn(unitList[index + 1]);
             myUnitList.Add(newUnit); 
             newUnit.gameObject.SetActive(true);
@@ -91,11 +91,9 @@ public class SpawnUnitManager : MonoBehaviour
     {
         GameObject unit = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Enemy, EnemyUnitSpawnPoint, Quaternion.identity, EnemyUnitSpawnPoint);
         UnitBase newUnit = unit.GetComponent<UnitBase>();
-
-       
-        newUnit.SetSpawn(unitList[1]);
+        
         newUnit.isMyUnit = false;
-        newUnit.SetUnit();
+        newUnit.SetSpawn(unitList[1]);
         enemyUnitList.Add(newUnit);
 
         unit.transform.position = EnemyUnitSpawnPoint.transform.position;

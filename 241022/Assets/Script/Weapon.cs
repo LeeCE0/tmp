@@ -23,19 +23,21 @@ public class Weapon : MonoBehaviour
     public bool isAttack = false;
     public UnitBase unit;
     public Sprite obImg;
+    private bool isMine;
      
     
     //원거리 (화살)
-    public void Launch(Vector2 start, Vector2 target)
+    public void LaunchArrow(GameObject start, Vector2 target, int dmg, UnitBase targetUnit)
     {
-        startPosition = start;
+        startPosition = start.transform.position;
         targetPosition = target;
-        transform.position = start;
-        if (!isRunning)
-        {
-            isRunning = true;
-            StartCoroutine(MoveStraightWithCurve());
-        }
+        transform.position = start.transform.position;
+
+        GameObject projectile = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Projectile_Arrow, unit.gameObject, Quaternion.identity);
+        projectile.transform.position = start.transform.position;
+
+        Projectile projectileData = projectile.GetComponent<Projectile>();
+        projectileData.Init(dmg, targetUnit, ObjectPoolManager.ePoolingObj.Projectile_fireBall, isMine);
     }
 
     private IEnumerator MoveStraightWithCurve()
@@ -57,18 +59,17 @@ public class Weapon : MonoBehaviour
 
     private void Explode()
     {
-        Debug.Log($"{weaponType} 이동 완료: 폭발!");
         Destroy(gameObject);
     }
 
     //원거리 (마법)
     private void LaunchFireball(GameObject start, Vector2 target, int dmg, UnitBase targetUnit)
     {
-        GameObject projectile = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Projectile, unit.gameObject, Quaternion.identity);
+        GameObject projectile = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Projectile_fireBall, unit.gameObject, Quaternion.identity);
         projectile.transform.position = start.transform.position;
 
         Projectile projectileData = projectile.GetComponent<Projectile>();
-        projectileData.Init(dmg, targetUnit);
+        projectileData.Init(dmg, targetUnit, ObjectPoolManager.ePoolingObj.Projectile_fireBall, isMine);
     }
 
     //근거리
@@ -81,6 +82,7 @@ public class Weapon : MonoBehaviour
     public void SetWeapon(eUnitType unitType, UnitBase units)
     {
         unit = units;
+        isMine = unit.isMyUnit;
         switch (unitType)
         {
             case eUnitType.Swordmaster:
@@ -108,6 +110,7 @@ public class Weapon : MonoBehaviour
                 AttackSword(target, dmg);
                 break;
             case eWeaponType.Bow:
+                LaunchArrow(gameObject, target.transform.position, dmg, target);
                 break;
             case eWeaponType.Magic:
                 LaunchFireball(gameObject, target.transform.position, dmg, target);
