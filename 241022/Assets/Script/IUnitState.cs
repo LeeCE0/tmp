@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Unit.UnitDataContainer;
+using static UnityEngine.GraphicsBuffer;
 
 public interface IUnitState
 {
@@ -97,9 +98,10 @@ public class AttackState : IUnitState
     private void PerformAttack()
     {
         if (unit.curTarget == null) return;
-        unit.anim.SetTrigger("Attack");
 
-        unit.weapon.StartAttack(unit.ATK, unit.curTarget);
+        unit.anim.SetTrigger("Attack");
+        if(unit.unitType != eUnitType.Archer)
+            unit.weapon.StartAttack(unit.ATK, unit.curTarget);
         unit.anim.SetBool("isMoving", false);
     }
 }
@@ -127,9 +129,26 @@ public class DeadState : IUnitState
 
     private IEnumerator HandleDeath()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+
+        yield return unit.StartCoroutine(FadeOut(1f));
 
         unit.Deactivate();
+    }
+
+    private IEnumerator FadeOut(float duration)
+    {
+        float elapsed = 0f;
+        Color color = unit.image.color;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+            unit.image.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
+        unit.image.color = new Color(color.r, color.g, color.b, 0f);
     }
 }
 

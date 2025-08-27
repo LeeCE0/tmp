@@ -19,9 +19,10 @@ MonoBehaviour:
   def: 5
   hp: 30
   cost: 10
-  attackDistance: 4
+  attackDistance: 5
   lockOnType: 0
   spriteImg: {fileID: 21300000, guid: 9bd1cac2a9db52d49acf9e73a8ed367d, type: 3}
   portraitImg: {fileID: 21300000, guid: 9bd1cac2a9db52d49acf9e73a8ed367d, type: 3}
   animCtrl: {fileID: 9100000, guid: 9e23832c1222f9248825d39e6ebc6877, type: 2}
   unitType: 4
+  useProjectile: {fileID: 6804502085391305098, guid: 809ef0ea40a566c47acf85687d2bc559, type: 3}

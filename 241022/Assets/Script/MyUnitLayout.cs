@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Unit;
 using UnityEngine;
 using UnityEngine.UI;
-using static DataClass;
-using static Unit.UnitDataContainer;
 
 public class MyUnitLayout : MonoBehaviour, LoopScrollDataSource
 {

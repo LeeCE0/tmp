@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Unit.UnitDataContainer;
+using static UnityEngine.GraphicsBuffer;
 
 public class UnitBase : MonoBehaviour
 {
@@ -15,7 +17,7 @@ public class UnitBase : MonoBehaviour
     [SerializeField] public eUnitType unitType = eUnitType.Swordmaster;
     [SerializeField] Weapon.eWeaponType weaponType = Weapon.eWeaponType.Sword; 
     [SerializeField] public Weapon weapon;
-    [SerializeField] SpriteRenderer image;
+    [SerializeField] public SpriteRenderer image;
     [SerializeField] HPbar hpImg;
 
     [SerializeField] public Animator anim = new Animator();
@@ -131,6 +133,10 @@ public class UnitBase : MonoBehaviour
 
         if (curHP <= 0)
             ChangeState(deadState);
+    }
+    public void LaunchArrow()
+    {
+        weapon.LaunchArrow(gameObject, curTarget.transform.position, ATK, curTarget);
     }
 
     public void Deactivate()

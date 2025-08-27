@@ -108,10 +108,7 @@ public class Weapon : MonoBehaviour
         {
             case eWeaponType.Sword:
                 AttackSword(target, dmg);
-                break;
-            case eWeaponType.Bow:
-                LaunchArrow(gameObject, target.transform.position, dmg, target);
-                break;
+                break;            
             case eWeaponType.Magic:
                 LaunchFireball(gameObject, target.transform.position, dmg, target);
                 break;

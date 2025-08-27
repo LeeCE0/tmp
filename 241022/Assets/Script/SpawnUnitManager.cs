@@ -45,7 +45,6 @@ public class SpawnUnitManager : MonoBehaviour
             unitBtn[i].SetData(i, SpawnUnit);
         }
 
-
         StartCoroutine(SpawnLoop());
     }
     public void SpawnUnit(int index)
@@ -100,10 +99,4 @@ public class SpawnUnitManager : MonoBehaviour
         unit.transform.rotation = Quaternion.identity;
 
     }
-
-    public void DeadUnitToPool()
-    {
-
-    }
-
 }

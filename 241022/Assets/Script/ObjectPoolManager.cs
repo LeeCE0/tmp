@@ -21,6 +21,7 @@ public class ObjectPoolManager : MonoBehaviour
         Enemy,
         Projectile_Arrow,
         Projectile_fireBall,
+        Effect_Sword,
         Max,
     }
 

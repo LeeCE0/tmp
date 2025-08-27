@@ -101,5 +101,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   atk: 0
-  speed: 0
+  speed: 5
   target: {fileID: 0}
+  delayTime: 1
