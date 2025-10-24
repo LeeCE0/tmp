@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Windows.Speech;
-using static Unit.UnitDataContainer;
 
 public class StageInfoPopup : MonoBehaviour, LoopScrollDataSource
 {

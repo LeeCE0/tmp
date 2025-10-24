@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
     }
     public enum CavasType
     {
-        Main,
+        Main, 
         Popup,
     }
 

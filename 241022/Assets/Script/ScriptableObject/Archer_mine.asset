@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0f9a049a2f4aab4092734c1315ef80d, type: 3}
-  m_Name: Archer
+  m_Name: Archer_mine
   m_EditorClassIdentifier: 
   unitID: 2
   unitSpeed: 1
   unitName: "\uC544\uCC98"
-  atk: 1
+  atk: 3
   def: 5
   hp: 30
   cost: 10

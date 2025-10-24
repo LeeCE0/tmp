@@ -13,5 +13,10 @@ MonoBehaviour:
   m_Name: UnitsDataList
   m_EditorClassIdentifier: 
   units:
-  - {fileID: 11400000, guid: 476a24d26f899e2458e32cda1f0450b7, type: 2}
   - {fileID: 11400000, guid: 112c4bbd45f811742b6fac20590feddc, type: 2}
+  - {fileID: 11400000, guid: 7d1844ccb8b6297418b4b316a259e599, type: 2}
+  - {fileID: 11400000, guid: 64c81b3c7fc52ec40a181c3cce866c05, type: 2}
+  - {fileID: 11400000, guid: b1b2169ac4cf7bb4199dc9f99e9d65c4, type: 2}
+  - {fileID: 11400000, guid: a9abb6a31d4eb3f4e8a93865608f5e7b, type: 2}
+  - {fileID: 11400000, guid: 476a24d26f899e2458e32cda1f0450b7, type: 2}
+  - {fileID: 11400000, guid: 3b0f8063a7ec81146b99fcd01afa09af, type: 2}

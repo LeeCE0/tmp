@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using static Unit.UnitDataContainer;
-using static UnityEngine.GraphicsBuffer;
 
 public class UnitBase : MonoBehaviour
 {
@@ -30,7 +28,6 @@ public class UnitBase : MonoBehaviour
 
     public UnitBase curTarget;
     public bool isMyUnit = true;
-    public bool isBullet = false;
     public bool isAttack = false;
 
     public int curHP;
@@ -134,6 +131,18 @@ public class UnitBase : MonoBehaviour
         if (curHP <= 0)
             ChangeState(deadState);
     }
+
+    public void HealHP(int amount)
+    {
+        if (curHP <= 0) return;
+        if (curHP + amount > maxHP)
+            curHP = maxHP;
+        else
+            curHP += amount;
+
+        hpImg.UpdateBar(curHP, maxHP);
+    }
+
     public void LaunchArrow()
     {
         weapon.LaunchArrow(gameObject, curTarget.transform.position, ATK, curTarget);

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Unit.UnitDataContainer;
-using static UnityEngine.GraphicsBuffer;
 
 public interface IUnitState
 {
@@ -105,6 +104,28 @@ public class AttackState : IUnitState
         unit.anim.SetBool("isMoving", false);
     }
 }
+
+public class StunState : IUnitState
+{
+    public eUnitState StateType => eUnitState.Debuff;
+    private UnitBase unit;
+    public StunState(UnitBase unit) => this.unit = unit;
+    public void Enter()
+    {
+
+    }
+    public void Update()
+    {
+
+    }
+    public void Exit()
+    {
+
+    }
+
+}
+
+
 public class DeadState : IUnitState
 {
     public eUnitState StateType => eUnitState.Dead;

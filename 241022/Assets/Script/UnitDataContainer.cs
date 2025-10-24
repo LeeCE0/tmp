@@ -21,6 +21,7 @@ namespace Unit
             Idle,
             Walk,
             Attack,
+            Debuff,
             Dead,
         }
 
@@ -35,7 +36,8 @@ namespace Unit
             Summoner,
             Shieldbearer,
             Assassin,
-            Cavalry
+            Cavalry,
+            Cannoneer
         }
 
 

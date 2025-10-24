@@ -10,6 +10,7 @@ public class Weapon : MonoBehaviour
         Sword = 1,
         Bow = 2,
         Magic = 3, 
+        Heal = 4,
         Ax,
     }
     [SerializeField] GameObject projectileOBJ;
@@ -19,7 +20,6 @@ public class Weapon : MonoBehaviour
     public float speed = 5f; // 이동 속도
     public float arcHeight = 2f; // 포물선 높이 (필요시)
     public bool isMeeleeType = false;
-    private bool isRunning = false;
     public bool isAttack = false;
     public UnitBase unit;
     public Sprite obImg;
@@ -40,28 +40,6 @@ public class Weapon : MonoBehaviour
         projectileData.Init(dmg, targetUnit, ObjectPoolManager.ePoolingObj.Projectile_fireBall, isMine);
     }
 
-    private IEnumerator MoveStraightWithCurve()
-    {
-        Vector2 direction = (targetPosition - startPosition).normalized;
-        float curveAmount = 0.1f; // 화살의 흔들림 정도
-
-        while ((Vector2)transform.position != targetPosition)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-
-            // 회전 연출
-            transform.right = direction + Vector2.up * Mathf.Sin(Time.time * 10) * curveAmount;
-
-            yield return null;
-        }
-        Explode();
-    }
-
-    private void Explode()
-    {
-        Destroy(gameObject);
-    }
-
     //원거리 (마법)
     private void LaunchFireball(GameObject start, Vector2 target, int dmg, UnitBase targetUnit)
     {
@@ -70,6 +48,12 @@ public class Weapon : MonoBehaviour
 
         Projectile projectileData = projectile.GetComponent<Projectile>();
         projectileData.Init(dmg, targetUnit, ObjectPoolManager.ePoolingObj.Projectile_fireBall, isMine);
+    }
+
+    //힐
+    private void GetHeal(int amount, UnitBase targetUnit)
+    {
+        targetUnit.HealHP(amount);
     }
 
     //근거리
@@ -111,6 +95,9 @@ public class Weapon : MonoBehaviour
                 break;            
             case eWeaponType.Magic:
                 LaunchFireball(gameObject, target.transform.position, dmg, target);
+                break;
+            case eWeaponType.Heal:
+                GetHeal(dmg, target);
                 break;
             case eWeaponType.Ax:
                 AttackSword(target, dmg);

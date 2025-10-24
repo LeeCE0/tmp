@@ -17,6 +17,9 @@ public class UnitsData : ScriptableObject
         Magician_mine,
         Archer_mine,
         Knight_mine,
+
+        Orc_enemy,
+        Undead_enemy,
     }
 
     public int unitID;

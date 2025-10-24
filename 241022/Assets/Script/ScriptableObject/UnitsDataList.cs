@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+
+//모든 유닛데이터
 [CreateAssetMenu(fileName = "UnitsDataList", menuName = "Game Data/UnitsData List")]
 public class UnitsDataList : ScriptableObject
 {

@@ -17,12 +17,16 @@ public class PlayerDataManager : MonoBehaviour
     }
 
     Dictionary<int, UnitsData> allUnit = new Dictionary<int, UnitsData>();
+    Dictionary<int, UnitsData> unlockUnit = new Dictionary<int, UnitsData>();    //사용 가능 유닛
 
 
     public void Start()
     {
         allUnit.Clear();
-       
+        unlockUnit.Clear();
+
+
+
         SpawnUnitManager.Instance.SetData();        
     }
 
@@ -33,13 +37,14 @@ public class PlayerDataManager : MonoBehaviour
 
     #region UnitUnlockData
     private Dictionary<int, int> unitLevels = new Dictionary<int, int>();
-
+    private List<int> unLockUnitList = new List<int>();
+    private const string unlockKey = "UnlockUnit";
     private const string SaveKey = "UnitLevelData";
 
     // 유닛 해금 여부
     public bool IsUnlocked(int unitID)
     {
-        return unitLevels.ContainsKey(unitID);
+        return unLockUnitList.Contains(unitID);
     }
 
     // 유닛 해금 (레벨 1로 등록)

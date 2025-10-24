@@ -34,7 +34,7 @@ public class Projectile : MonoBehaviour
         }
 
     }
-    void Update()
+    void Update() 
     {
         if (target == null)
         {
