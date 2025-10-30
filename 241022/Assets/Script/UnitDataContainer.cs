@@ -89,7 +89,7 @@ namespace Unit
             {
                 UnitType = type;
             }
-
+            
             public void SetTeam(bool isMine)
             {
                 IsMyUnit = isMine;
@@ -108,10 +108,9 @@ namespace Unit
             else
             {
                 Destroy(gameObject); 
-            }
-
-            
+            }            
             unitsDataList.Init();
+
             // 모든 유닛 데이터 가져오기
             foreach (var item in unitsDataList.GetAllUnitData())
             {
@@ -121,7 +120,7 @@ namespace Unit
                 }
             }
         }
-
+         
         private void Start()
         {
         }

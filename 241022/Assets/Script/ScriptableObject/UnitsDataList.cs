@@ -15,7 +15,7 @@ public class UnitsDataList : ScriptableObject
     {
         unitDict = new Dictionary<int, UnitsData>();
 
-        foreach (var unit in units)
+        foreach (var unit in units) 
         {
             if (!unitDict.ContainsKey(unit.unitID))
                 unitDict[unit.unitID] = unit;
@@ -26,4 +26,32 @@ public class UnitsDataList : ScriptableObject
     {
         return unitDict;
     }
+
+    public Dictionary<int, UnitsData> GetMineUnit()
+    {
+            Dictionary<int, UnitsData> result = new Dictionary<int, UnitsData>();
+
+            foreach (var unit in units)
+            {
+                if(unit.unitID < 100)
+                    result.Add(unit.unitID, unit);
+            }
+
+        return result;
+    }
+
+    public Dictionary<int, UnitsData> GetEnemyUnit()
+    {
+        Dictionary<int, UnitsData> result = new Dictionary<int, UnitsData>();
+
+        foreach (var unit in units)
+        {
+            if (unit.unitID >= 100)
+                result.Add(unit.unitID, unit);
+        }
+
+        return result;
+    }
 }
+
+
