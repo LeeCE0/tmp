@@ -23,5 +23,6 @@ public class WaveData
 {
     public int waveNum;   //웨이브 번호
     public int[] unitIDList;  //웨이브 당 스폰 될 유닛 리스트
-    public int spawnDelay;  //각 유닛당 스폰 딜레이
+    public int spawnDelayMin;  //각 유닛당 스폰 딜레이
+    public int spawnDelayMax;
 }

@@ -12,10 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca1bbc05879b5a4490290170cc34f97, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
-  stageID: 0
-  name: 
-  allSpawnCount: 0
-  triggerThreshold: 0
-  minInterval: 0
+  stageID: 1
+  name: test
+  allSpawnCount: 50
+  triggerThreshold: 3
+  minInterval: 5
   maxConcurrent: 0
-  waveData: []
+  waveData:
+  - waveNum: 1
+    unitIDList: 64000000650000006500000064000000640000006500000065000000650000006400000064000000
+    spawnDelayMin: 0
+    spawnDelayMax: 0
+  - waveNum: 2
+    unitIDList: 00000000
+    spawnDelayMin: 0
+    spawnDelayMax: 0
+  - waveNum: 3
+    unitIDList: 00000000
+    spawnDelayMin: 0
+    spawnDelayMax: 0
