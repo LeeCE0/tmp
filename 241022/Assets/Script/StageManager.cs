@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
 using TMPro;
 using Unit;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -19,31 +21,22 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    #region Currency
-
-    [SerializeField] GameObject notEnoughCurrency;
-    [SerializeField] TextMeshProUGUI resourceText;  // UI 텍스트
-
-    public int curCurrency = 100;  // 시작 자원
+    public int startValue = 0; //시작 자원
+    public int curCurrency = 0;  // 현재 자원
     public int currencyPerSecond = 10;  // 초당 증가 자원량
     public float forSecond = 5f;
 
-    Vector3 originalPosition;
-
     void Start()
     {
-        resourceText.text = curCurrency.ToString();
         StartCoroutine(ResourceGain());
-
-        originalPosition = resourceText.rectTransform.localPosition;
     }
 
+    #region Currency
     IEnumerator ResourceGain()
     {
         while (true)
         {
             curCurrency += currencyPerSecond;
-            UpdateResourceUI();
             yield return new WaitForSeconds(forSecond);
         }
     }
@@ -51,7 +44,6 @@ public class StageManager : MonoBehaviour
     public void UseCurrency(int amount)
     {
         curCurrency -= amount;
-        UpdateResourceUI();
     }
 
     public int GetCurrency()
@@ -63,48 +55,5 @@ public class StageManager : MonoBehaviour
     {
         return GetCurrency() >= amount;
     }
-
-    void UpdateResourceUI()
-    {
-        resourceText.text = curCurrency.ToString();
-    }
-
-    public void StartShaking()
-    {
-        StartCoroutine(ShakeText());
-    }
-
-    private IEnumerator ShakeText()
-    {
-        float elapsedTime = 0f;
-        resourceText.color = Color.red;
-        while (elapsedTime < 0.4f)
-        {
-            Vector3 randomOffset = new Vector3(
-                Random.Range(-5f, 5f),
-                Random.Range(-5f, 5f),
-                0);
-
-            resourceText.rectTransform.localPosition = originalPosition + randomOffset;
-            elapsedTime += Time.deltaTime;
-
-            yield return null;
-        }
-
-        resourceText.rectTransform.localPosition = originalPosition;
-
-        resourceText.color = Color.white;
-    }
-
     #endregion
-
-
-
-    public void SetGameEnd(bool isMine)
-    {
-        if (isMine)
-            Debug.LogError("LOSE");
-        else
-            Debug.LogError("WIN");
-    }
 }

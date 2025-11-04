@@ -18,7 +18,7 @@ public class UnitsData : ScriptableObject
         Archer_mine,
         Knight_mine,
 
-        Orc_enemy,
+        Orc_enemy, 
         Undead_enemy,
     }
 

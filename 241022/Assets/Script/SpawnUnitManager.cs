@@ -66,7 +66,7 @@ public class SpawnUnitManager : MonoBehaviour
         }
         else
         {
-            StageManager.Instance.StartShaking();
+            //StageManager.Instance.StartShaking();
         }
     }
 
