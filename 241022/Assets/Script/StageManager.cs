@@ -1,9 +1,6 @@
+using UnityEngine;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unit;
-using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
@@ -22,6 +19,10 @@ public class StageManager : MonoBehaviour
     public int curStageNum = 0;
     public StageData curStageData = null;
     public int curWaveNum = 0;
+    public WaveData waveDatas = null;
+    public int[] spawnUnitList = null;  //스폰 되어야 할 유닛 리스트
+
+
 
     public int curUnitSpawn = 0; //현재 필드에 소환 되어있는 적 유닛 수
     public float minSpawnDelay = 0f; //웨이브 소환 타이머
@@ -40,7 +41,6 @@ public class StageManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(ResourceGain());
     }
 
     public void SetStage(StageData data)
@@ -80,13 +80,17 @@ public class StageManager : MonoBehaviour
 
     #region SpawnData
 
-    public void WaveStart()
+    public void GameStart()
     {
+        StartCoroutine(ResourceGain());
+         
+        
         for (int i = 0; i < curStageData.waveData.Length; i++)
         {
-            if(curUnitSpawn <= curStageData.triggerThreshold && Time.time >= curStageData.minInterval) //&& 최소 소환딜레이 추가)
+            //웨이브가 시작
+            if(curUnitSpawn <= curStageData.triggerThreshold && Time.time >= curStageData.minInterval)
             {
-                //다음 웨이브 소환
+                waveDatas = curStageData.waveData[i];
                 StartCoroutine(SpawnWave());
                 minSpawnDelay = Time.time + curStageData.minInterval;
             }
@@ -95,8 +99,14 @@ public class StageManager : MonoBehaviour
 
     IEnumerator SpawnWave()
     {
-        SpawnUnitManager.Instance.SpawnUnitFromPool();
-        yield return new WaitForSeconds(forSecond);
+        //웨이브 내에서 스폰 중
+        for(int i = 0; i < waveDatas.unitIDList.Length; i++)
+        {
+            float spawnDelay = UnityEngine.Random.Range(waveDatas.spawnDelayMin, waveDatas.spawnDelayMax);
+            yield return new WaitForSeconds(spawnDelay);
+
+            SpawnUnitManager.Instance.SpawnUnitFromPool(waveDatas.unitIDList[i]);
+        }
     }
 
 

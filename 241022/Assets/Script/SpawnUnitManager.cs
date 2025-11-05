@@ -74,13 +74,13 @@ public class SpawnUnitManager : MonoBehaviour
 
     }
 
-    public void SpawnUnitFromPool()
+    public void SpawnUnitFromPool(UnitsData data)
     {
         GameObject unit = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Enemy, EnemyUnitSpawnPoint, Quaternion.identity, EnemyUnitSpawnPoint);
         UnitBase newUnit = unit.GetComponent<UnitBase>();
         
         newUnit.isMyUnit = false;
-        newUnit.SetSpawn(unitList[1]);
+        newUnit.SetSpawn(data);
         enemyUnitList.Add(newUnit);
 
         unit.transform.position = EnemyUnitSpawnPoint.transform.position;
