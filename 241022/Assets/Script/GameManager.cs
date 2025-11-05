@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-
-    public int selectedStage;
+    [SerializeField] StageDataList allStageData;
+    public int selectedStage = 1;
 
     private void Awake()
     {
@@ -36,8 +36,21 @@ public class GameManager : MonoBehaviour
 
     public void LoadStage(int stageIndex)
     {
+        if (allStageData == null)
+        {
+            Debug.LogError("StageData is NULL");
+            return;
+        }
+
         selectedStage = stageIndex;
         SceneManager.LoadScene("BattleScene");
+
+        StageData target = allStageData.Get(selectedStage);
+
+        if (target != null)
+            Debug.Log($"로드 완료: {target.stageID}");
+        
+        StageManager.Instance.SetStage(target);
     }
 
 }

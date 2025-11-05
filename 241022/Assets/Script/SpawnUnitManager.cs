@@ -44,8 +44,6 @@ public class SpawnUnitManager : MonoBehaviour
         {
             unitBtn[i].SetData(i, SpawnUnit);
         }
-
-        StartCoroutine(SpawnLoop());
     }
     public void SpawnUnit(int index)
     {
@@ -66,27 +64,17 @@ public class SpawnUnitManager : MonoBehaviour
         }
         else
         {
-            //StageManager.Instance.StartShaking();
+            StageManager.Instance.textShaking();
         }
     }
 
     public void RemoveUnit(int UnitID)
     {
         var rmUnit = myUnitList.Find(x => x.GetUnitID() == UnitID);
+
     }
 
-    public float spawnInterval = 10f; // 10초
-
-    private IEnumerator SpawnLoop()
-    {
-        while (true)
-        {
-            SpawnUnitFromPool();
-            yield return new WaitForSeconds(spawnInterval);
-        }
-    }
-
-    private void SpawnUnitFromPool()
+    public void SpawnUnitFromPool()
     {
         GameObject unit = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.Enemy, EnemyUnitSpawnPoint, Quaternion.identity, EnemyUnitSpawnPoint);
         UnitBase newUnit = unit.GetComponent<UnitBase>();

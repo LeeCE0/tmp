@@ -7,7 +7,6 @@ public class InGameBattleUI : MonoBehaviour
     [SerializeField] GameObject notEnoughCurrency;
     [SerializeField] TextMeshProUGUI resourceText;  // UI 텍스트
 
-    public int startValue = 0; //시작 자원
     public int curCurrency = 0;  // 현재 자원
     public int currencyPerSecond = 10;  // 초당 증가 자원량
     public float forSecond = 5f;
@@ -18,10 +17,13 @@ public class InGameBattleUI : MonoBehaviour
     private void Start()
     {
         originalPosition = resourceText.rectTransform.localPosition;
+        StageManager.Instance.OnChangeCurrency += UpdateResourceUI;
+        StageManager.Instance.textShaking += StartShaking;
     }
 
-    void UpdateResourceUI()
+    void UpdateResourceUI(int value)
     {
+        curCurrency = value;
         resourceText.text = curCurrency.ToString();
     }
 
