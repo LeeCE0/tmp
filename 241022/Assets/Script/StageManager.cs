@@ -100,7 +100,7 @@ public class StageManager : MonoBehaviour
             float spawnDelay = UnityEngine.Random.Range(waveDatas.spawnDelayMin, waveDatas.spawnDelayMax);
             yield return new WaitForSeconds(spawnDelay);
 
-            SpawnUnitManager.Instance.SpawnUnitFromPool(waveDatas.unitIDList[i]);
+            //SpawnUnitManager.Instance.SpawnUnitFromPool(waveDatas.unitIDList[i]);
         }
     }
 

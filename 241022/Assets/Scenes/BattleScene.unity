@@ -810,6 +810,7 @@ GameObject:
   m_Component:
   - component: {fileID: 242472543}
   - component: {fileID: 242472545}
+  - component: {fileID: 242472546}
   m_Layer: 0
   m_Name: GameWorld
   m_TagString: Untagged
@@ -847,6 +848,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242472542}
   m_CullTransparentMesh: 1
+--- !u!114 &242472546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242472542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd1bae6fad99224b92ef14dc1751d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitBtn:
+  - {fileID: 418980242}
+  - {fileID: 2066762241}
+  - {fileID: 1480611007}
+  - {fileID: 661521453}
+  myUnit: {fileID: 0}
+  enemyUnit: {fileID: 0}
+  MyUnitSpawnPoint: {fileID: 943834637}
+  EnemyUnitSpawnPoint: {fileID: 904829329}
+  myNexus: {fileID: 1339390140}
+  enemyNexus: {fileID: 1868371332}
+  myUnitList: []
+  enemyUnitList: []
 --- !u!1 &273547675
 GameObject:
   m_ObjectHideFlags: 0
@@ -3465,7 +3491,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2113644787}
-  - component: {fileID: 2113644786}
   - component: {fileID: 2113644785}
   - component: {fileID: 2113644789}
   - component: {fileID: 2113644790}
@@ -3492,31 +3517,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allStageData: {fileID: 11400000, guid: f92ec4a162b522c4b89a3c2c31825086, type: 2}
   selectedStage: 0
---- !u!114 &2113644786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113644784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9229ef31c2b94f943bfbfc9e052c4fb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitBtn:
-  - {fileID: 418980242}
-  - {fileID: 2066762241}
-  - {fileID: 1480611007}
-  - {fileID: 661521453}
-  myUnit: {fileID: 0}
-  enemyUnit: {fileID: 0}
-  MyUnitSpawnPoint: {fileID: 943834637}
-  EnemyUnitSpawnPoint: {fileID: 904829329}
-  myNexus: {fileID: 1339390140}
-  enemyNexus: {fileID: 1868371332}
-  myUnitList: []
-  enemyUnitList: []
 --- !u!4 &2113644787
 Transform:
   m_ObjectHideFlags: 0
