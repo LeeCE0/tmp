@@ -28,7 +28,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void Start()
+    {
+        LoadStage(1);
 
+    }
     public void GameStart()
     {
         UIManager.Instance.LoadUI(UIManager.eUIType.StageUI);

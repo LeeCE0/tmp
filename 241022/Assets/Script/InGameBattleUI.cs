@@ -26,7 +26,7 @@ public class InGameBattleUI : MonoBehaviour
         curCurrency = value;
         resourceText.text = curCurrency.ToString();
     }
-
+     
     public void StartShaking()
     {
         StartCoroutine(ShakeText());

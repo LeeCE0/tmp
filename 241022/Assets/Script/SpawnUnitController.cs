@@ -1,22 +1,9 @@
-using Unit;
-using System.Collections;
 using System.Collections.Generic;
+using Unit;
 using UnityEngine;
-using static Unit.UnitDataContainer;
 
-public class SpawnUnitManager : MonoBehaviour
+public class SpawnUnitController : MonoBehaviour
 {
-    private static SpawnUnitManager instance;
-    public static SpawnUnitManager Instance
-    {
-        get
-        {
-            if (instance == null)
-                instance = FindObjectOfType<SpawnUnitManager>();
-            return instance;
-        }
-    }
-
     [SerializeField] UnitSlot[] unitBtn;
     [SerializeField] UnitBase myUnit;
     [SerializeField] UnitBase enemyUnit;
@@ -25,10 +12,9 @@ public class SpawnUnitManager : MonoBehaviour
     [SerializeField] public NexusInfo myNexus;
     [SerializeField] public NexusInfo enemyNexus;
 
-    Dictionary<int, UnitsData> unitList = new Dictionary<int, UnitsData>();   // ë½‘ì„ ìˆ˜ ìˆëŠ” ìœ ë‹› ë¦¬ìŠ¤íŠ¸
-    public List<UnitBase> myUnitList = new List<UnitBase>();   // í•„ë“œì— ì†Œí™˜ë˜ì–´ìˆëŠ” ìœ ë‹›
-    public List<UnitBase> enemyUnitList = new List<UnitBase>();  //í•„ë“œì— ì†Œí™˜ë˜ì–´ìˆëŠ” ì  ìœ ë‹›
-
+    Dictionary<int, UnitsData> unitList = new Dictionary<int, UnitsData>();   // »ÌÀ» ¼ö ÀÖ´Â À¯´Ö ¸®½ºÆ®
+    public List<UnitBase> myUnitList = new List<UnitBase>();   // ÇÊµå¿¡ ¼ÒÈ¯µÇ¾îÀÖ´Â À¯´Ö
+    public List<UnitBase> enemyUnitList = new List<UnitBase>();  //ÇÊµå¿¡ ¼ÒÈ¯µÇ¾îÀÖ´Â Àû À¯´Ö
 
 
     public void Start()
@@ -40,13 +26,13 @@ public class SpawnUnitManager : MonoBehaviour
     {
         unitList.Clear();
         unitList = UnitDataContainer.Instance.GetAllUnitData();
-         
+
         for (int i = 0; i < unitBtn.Length; i++)
         {
             unitBtn[i].SetData(i, SpawnUnit);
         }
 
-                                                                                
+
     }
     public void SpawnUnit(int index)
     {
@@ -54,7 +40,7 @@ public class SpawnUnitManager : MonoBehaviour
         {
             StageManager.Instance.UseCurrency(unitList[index + 1].cost);
             GameObject item = ObjectPoolManager.Instance.SpawnFromPool(ObjectPoolManager.ePoolingObj.MyUnit, MyUnitSpawnPoint, Quaternion.identity, MyUnitSpawnPoint);
-            UnitBase newUnit = item.GetComponent<UnitBase>();  
+            UnitBase newUnit = item.GetComponent<UnitBase>();
             if (newUnit == null)
             {
                 Debug.LogError("no component : UnitInfo");
@@ -62,7 +48,7 @@ public class SpawnUnitManager : MonoBehaviour
             }
             newUnit.isMyUnit = true;
             newUnit.SetSpawn(unitList[index + 1]);
-            myUnitList.Add(newUnit); 
+            myUnitList.Add(newUnit);
             newUnit.gameObject.SetActive(true);
         }
         else
@@ -92,4 +78,3 @@ public class SpawnUnitManager : MonoBehaviour
 
     }
 }
- 

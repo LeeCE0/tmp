@@ -1508,9 +1508,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09514031f5c4bea4f878d75f708f0c91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notEnoughCurrency: {fileID: 0}
-  resourceText: {fileID: 0}
-  startValue: 0
+  notEnoughCurrency: {fileID: 1758847847}
+  resourceText: {fileID: 1195966621}
   curCurrency: 100
   currencyPerSecond: 10
   forSecond: 5
@@ -3491,6 +3490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 069c9e7b955abc144a0f28115e59c808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allStageData: {fileID: 11400000, guid: f92ec4a162b522c4b89a3c2c31825086, type: 2}
   selectedStage: 0
 --- !u!114 &2113644786
 MonoBehaviour:
@@ -3517,7 +3517,6 @@ MonoBehaviour:
   enemyNexus: {fileID: 1868371332}
   myUnitList: []
   enemyUnitList: []
-  spawnInterval: 10
 --- !u!4 &2113644787
 Transform:
   m_ObjectHideFlags: 0
@@ -3557,6 +3556,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b42f4745523f34aa935457c61ad463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curStageNum: 0
+  curStageData: {fileID: 0}
+  curWaveNum: 0
+  waveDatas:
+    waveNum: 0
+    unitIDList: 
+    startDelay: 0
+    spawnDelayMin: 0
+    spawnDelayMax: 0
+  spawnUnitList: 
+  curUnitSpawn: 0
+  minSpawnDelay: 0
   startValue: 0
   curCurrency: 100
   currencyPerSecond: 10

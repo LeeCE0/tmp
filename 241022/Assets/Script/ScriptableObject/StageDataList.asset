@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5587f10de87d944d80209d6d19ff6b8, type: 3}
   m_Name: StageDataList
   m_EditorClassIdentifier: 
+  stageDatasList:
+  - {fileID: 11400000, guid: 6688b713170f51748918573f79afdb46, type: 2}

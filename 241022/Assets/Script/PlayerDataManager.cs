@@ -24,8 +24,6 @@ public class PlayerDataManager : MonoBehaviour
     {
         allUnit.Clear();
         unlockUnit.Clear();
-
-        SpawnUnitManager.Instance.SetData();        
     }
 
     public Dictionary<int, UnitsData> GetAllUnit()

@@ -22,13 +22,8 @@ public class StageManager : MonoBehaviour
     public WaveData waveDatas = null;
     public int[] spawnUnitList = null;  //스폰 되어야 할 유닛 리스트
 
-
-
     public int curUnitSpawn = 0; //현재 필드에 소환 되어있는 적 유닛 수
     public float minSpawnDelay = 0f; //웨이브 소환 타이머
-    
-
-
 
     public int startValue = 0; //시작 자원
     public int curCurrency = 0;  // 현재 자원
