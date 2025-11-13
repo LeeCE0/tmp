@@ -21,13 +21,16 @@ MonoBehaviour:
   waveData:
   - waveNum: 1
     unitIDList: 64000000650000006500000064000000640000006500000065000000650000006400000064000000
-    spawnDelayMin: 0
-    spawnDelayMax: 0
+    startDelay: 2
+    spawnDelayMin: 1
+    spawnDelayMax: 4
   - waveNum: 2
     unitIDList: 00000000
+    startDelay: 0
     spawnDelayMin: 0
     spawnDelayMax: 0
   - waveNum: 3
     unitIDList: 00000000
+    startDelay: 0
     spawnDelayMin: 0
     spawnDelayMax: 0

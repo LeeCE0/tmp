@@ -89,9 +89,9 @@ public class UnitBase : MonoBehaviour
       curTarget == null ? float.MaxValue : Vector2.Distance(transform.position, curTarget.transform.position);
 
 
-    public NexusInfo FindNexus()
+    public NexusInfo FindTargetNexus()
     {
-        NexusInfo nexusTarget = isMyUnit ? SpawnUnitManager.Instance.enemyNexus : SpawnUnitManager.Instance.myNexus;
+        NexusInfo nexusTarget = isMyUnit ? StageManager.Instance.spawner.enemyNexus : StageManager.Instance.spawner.myNexus;
 
         if (nexusTarget != null)
         {
@@ -104,7 +104,7 @@ public class UnitBase : MonoBehaviour
 
     public UnitBase FindNearestEnemy()
     {
-        List<UnitBase> enemies = isMyUnit ? SpawnUnitManager.Instance.enemyUnitList : SpawnUnitManager.Instance.myUnitList;
+        List<UnitBase> enemies = isMyUnit ? StageManager.Instance.spawner.enemyUnitList : StageManager.Instance.spawner.myUnitList;
 
         if (enemies == null || enemies.Count == 0) return null;
 

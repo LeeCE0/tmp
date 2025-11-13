@@ -21,6 +21,10 @@ public class SpawnUnitController : MonoBehaviour
     {
         SetData();
     }
+    public void OnEnable()
+    {
+        StageManager.Instance.RegisterController(this);
+    }
 
     public void SetData()
     {
@@ -31,8 +35,6 @@ public class SpawnUnitController : MonoBehaviour
         {
             unitBtn[i].SetData(i, SpawnUnit);
         }
-
-
     }
     public void SpawnUnit(int index)
     {

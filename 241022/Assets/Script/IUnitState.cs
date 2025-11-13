@@ -34,7 +34,7 @@ public class WalkState : IUnitState
              
             unit.curTarget = unit.FindNearestEnemy();
 
-            NexusInfo nexus = unit.FindNexus();
+            NexusInfo nexus = unit.FindTargetNexus();
             if (nexus != null && Vector2.Distance(unit.transform.position, nexus.transform.position) < unit.attackDistance)
             {
                 unit.ChangeState(new NexusAttackState(unit, nexus));

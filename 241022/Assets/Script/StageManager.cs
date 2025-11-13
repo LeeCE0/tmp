@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class StageManager : MonoBehaviour
 {
@@ -30,9 +31,12 @@ public class StageManager : MonoBehaviour
     public int currencyPerSecond = 10;  // 초당 증가 자원량
     public float forSecond = 5f;
 
-
     public Action<int> OnChangeCurrency = null;
     public Action textShaking = null;
+
+    public SpawnUnitController spawner = null;
+
+    public Action spawEnemy = null;
 
     void Start()
     {
@@ -43,6 +47,12 @@ public class StageManager : MonoBehaviour
         curStageData = data;
         curStageNum = data.stageID;
         curWaveNum = 0;
+        GameStart();
+    }
+
+    public void RegisterController(SpawnUnitController control)
+    {
+        spawner = control;
     }
 
     #region Currency
@@ -78,29 +88,42 @@ public class StageManager : MonoBehaviour
     public void GameStart()
     {
         StartCoroutine(ResourceGain());
-         
-        
-        for (int i = 0; i < curStageData.waveData.Length; i++)
-        {
-            //웨이브가 시작
-            if(curUnitSpawn <= curStageData.triggerThreshold && Time.time >= curStageData.minInterval)
-            {
-                waveDatas = curStageData.waveData[i];
-                StartCoroutine(SpawnWave());
-                minSpawnDelay = Time.time + curStageData.minInterval;
-            }
-        }
+        NextWaveReady();
     }
 
-    IEnumerator SpawnWave()
+
+    public void NextWaveReady()
     {
-        //웨이브 내에서 스폰 중
-        for(int i = 0; i < waveDatas.unitIDList.Length; i++)
+        //웨이브 시작 : 최소 유닛수, 최소 인터벌 충족시
+        if (curUnitSpawn > curStageData.triggerThreshold)
+            return;
+        if (Time.time < minSpawnDelay)
+            return;
+        if (curWaveNum >= curStageData.waveData.Length)
+            return;
+
+        waveDatas = curStageData.waveData[curWaveNum];
+        StartCoroutine(SpawnWave(waveDatas));
+        minSpawnDelay = Time.time + curStageData.minInterval;
+        curWaveNum++;
+    }
+
+
+    IEnumerator SpawnWave(WaveData wave)
+    {
+        if (spawner == null)
         {
-            float spawnDelay = UnityEngine.Random.Range(waveDatas.spawnDelayMin, waveDatas.spawnDelayMax);
+            Debug.LogError("Controller is missing");
+            yield return null;
+        }
+
+        //웨이브 내에서 유닛들 스폰 중
+        for(int i = 0; i < wave.unitIDList.Length; i++)
+        {
+            float spawnDelay = UnityEngine.Random.Range(wave.spawnDelayMin, wave.spawnDelayMax);
             yield return new WaitForSeconds(spawnDelay);
 
-            //SpawnUnitManager.Instance.SpawnUnitFromPool(waveDatas.unitIDList[i]);
+            spawner.SpawnUnitFromPool(wave.unitIDList[i]);
         }
     }
 
