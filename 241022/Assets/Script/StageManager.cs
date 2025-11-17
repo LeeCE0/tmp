@@ -36,6 +36,7 @@ public class StageManager : MonoBehaviour
 
     public SpawnUnitController spawner = null;
 
+
     public Action spawEnemy = null;
 
     void Start()
@@ -79,6 +80,8 @@ public class StageManager : MonoBehaviour
 
     public bool IsEnoughCurrency(int amount)
     {
+        if (GetCurrency() < amount)
+            textShaking?.Invoke();
         return GetCurrency() >= amount;
     }
     #endregion

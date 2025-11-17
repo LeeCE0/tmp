@@ -25,7 +25,7 @@ public class WalkState : IUnitState
     }
 
     public void Update() 
-    {
+    {       
         if (unit.curTarget == null)
         {
             unit.anim.SetBool("isMoving", true);
@@ -74,7 +74,10 @@ public class AttackState : IUnitState
 
     public void Update()
     {
-        if (unit.curTarget == null || unit.curTarget.curHP <= 0 || unit.DistanceToTarget() > unit.attackDistance)
+        if (unit.curTarget.curHP <= 0)
+            return;
+
+        if (unit.curTarget == null || unit.DistanceToTarget() > unit.attackDistance)
         {
             unit.curTarget = null;
             unit.ChangeState(new WalkState(unit));

@@ -53,10 +53,6 @@ public class SpawnUnitController : MonoBehaviour
             myUnitList.Add(newUnit);
             newUnit.gameObject.SetActive(true);
         }
-        else
-        {
-            StageManager.Instance.textShaking();
-        }
     }
 
     public void RemoveUnit(int UnitID)

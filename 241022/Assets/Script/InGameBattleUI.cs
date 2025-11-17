@@ -17,8 +17,22 @@ public class InGameBattleUI : MonoBehaviour
     private void Start()
     {
         originalPosition = resourceText.rectTransform.localPosition;
+        
+    }
+
+    public void OnEnable()
+    {
         StageManager.Instance.OnChangeCurrency += UpdateResourceUI;
         StageManager.Instance.textShaking += StartShaking;
+    }
+
+    public void OnDisable()
+    {
+        if (StageManager.Instance == null)
+            return; 
+
+        StageManager.Instance.OnChangeCurrency -= UpdateResourceUI;
+        StageManager.Instance.textShaking -= StartShaking;
     }
 
     void UpdateResourceUI(int value)
@@ -30,6 +44,7 @@ public class InGameBattleUI : MonoBehaviour
     public void StartShaking()
     {
         StartCoroutine(ShakeText());
+        StartCoroutine(WarningText());
     }
 
     private IEnumerator ShakeText()
@@ -52,6 +67,17 @@ public class InGameBattleUI : MonoBehaviour
         resourceText.rectTransform.localPosition = originalPosition;
 
         resourceText.color = Color.white;
+    }
+
+    private IEnumerator WarningText()
+    {
+        if (notEnoughCurrency.activeSelf)
+            yield break;
+        notEnoughCurrency.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        notEnoughCurrency.SetActive(false);
     }
     public void SetGameEnd(bool isMine)
     {

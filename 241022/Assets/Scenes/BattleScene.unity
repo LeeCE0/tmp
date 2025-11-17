@@ -871,6 +871,7 @@ MonoBehaviour:
   EnemyUnitSpawnPoint: {fileID: 904829329}
   myNexus: {fileID: 1339390140}
   enemyNexus: {fileID: 1868371332}
+  battleUI: {fileID: 651986571}
   myUnitList: []
   enemyUnitList: []
 --- !u!1 &273547675
@@ -3572,6 +3573,7 @@ MonoBehaviour:
   curCurrency: 100
   currencyPerSecond: 10
   forSecond: 5
+  spawner: {fileID: 0}
 --- !u!114 &2113644791
 MonoBehaviour:
   m_ObjectHideFlags: 0

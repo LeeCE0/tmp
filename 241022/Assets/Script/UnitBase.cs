@@ -7,7 +7,7 @@ public class UnitBase : MonoBehaviour
 {
     private WalkState walkState;
     private DeadState deadState;
-    private IUnitState currentState;
+    public IUnitState currentState;
 
     public float moveSpeed = 2.0f;
     [SerializeField] Rigidbody2D rigid;
@@ -29,6 +29,7 @@ public class UnitBase : MonoBehaviour
     public UnitBase curTarget;
     public bool isMyUnit = true;
     public bool isAttack = false;
+    public bool isDead = false;
 
     public int curHP;
     public int maxHP;
@@ -36,10 +37,15 @@ public class UnitBase : MonoBehaviour
     public int GetUnitID() { return ID; }
 
 
-    void Start()
+    private void Awake()
     {
         walkState = new WalkState(this);
         deadState = new DeadState(this);
+    }
+
+    void Start()
+    {
+        isDead = false;
         ChangeState(walkState);
     }
 
@@ -51,6 +57,9 @@ public class UnitBase : MonoBehaviour
     public void ChangeState(IUnitState nextState)
     {
         currentState?.Exit();
+
+        if (isDead)
+            return;
         currentState = nextState;
         currentState?.Enter();
     }
@@ -123,18 +132,22 @@ public class UnitBase : MonoBehaviour
 
     public void TakeDMG(int dmg)
     {
-        if (curHP <= 0) return;
+        if (curHP <= 0 || isDead) return;
         curHP -= dmg;
         hpImg.UpdateBar(curHP, maxHP);
         //ShowDamageText(damage);
 
         if (curHP <= 0)
+        {
             ChangeState(deadState);
+
+            isDead = true;
+        }
     }
 
     public void HealHP(int amount)
     {
-        if (curHP <= 0) return;
+        if (curHP <= 0 || isDead) return;
         if (curHP + amount > maxHP)
             curHP = maxHP;
         else
