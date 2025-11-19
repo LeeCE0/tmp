@@ -74,10 +74,8 @@ public class AttackState : IUnitState
 
     public void Update()
     {
-        if (unit.curTarget.curHP <= 0)
-            return;
-
-        if (unit.curTarget == null || unit.DistanceToTarget() > unit.attackDistance)
+        //현재 타겟이 없거나, 범위 안에 없거나, 타겟이 죽었을 경우 재 탐색
+        if (unit.curTarget == null || unit.DistanceToTarget() > unit.attackDistance || unit.curTarget.curHP <= 0)
         {
             unit.curTarget = null;
             unit.ChangeState(new WalkState(unit));

@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Undead_enemy
   m_EditorClassIdentifier: 
   unitID: 101
-  unitSpeed: 0
-  unitName: 
-  atk: 0
+  unitSpeed: 1
+  unitName: Undead
+  atk: 3
   def: 0
-  hp: 0
+  hp: 10
   cost: 0
-  attackDistance: 0
+  attackDistance: 1.5
   lockOnType: 0
-  spriteImg: {fileID: 0}
-  portraitImg: {fileID: 0}
-  animCtrl: {fileID: 0}
-  unitType: 0
+  spriteImg: {fileID: 21300000, guid: bc8822cea46671547a648b7e81119158, type: 3}
+  portraitImg: {fileID: 21300000, guid: bc8822cea46671547a648b7e81119158, type: 3}
+  animCtrl: {fileID: 9100000, guid: 01290762cfa11bb43873a16847372ee7, type: 2}
+  unitType: 7
   useProjectile: {fileID: 0}

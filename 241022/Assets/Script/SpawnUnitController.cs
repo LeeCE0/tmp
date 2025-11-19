@@ -55,10 +55,18 @@ public class SpawnUnitController : MonoBehaviour
         }
     }
 
-    public void RemoveUnit(int UnitID)
+    public void RemoveAllUnitByID(int UnitID)
     {
         var rmUnit = myUnitList.Find(x => x.GetUnitID() == UnitID);
 
+    }
+
+    public void UnitDie(bool isMine, UnitBase unit)
+    {
+        if (isMine)
+            myUnitList.Remove(unit);
+        else
+            enemyUnitList.Remove(unit);
     }
 
     public void SpawnUnitFromPool(int unitID)

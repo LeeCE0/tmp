@@ -29,7 +29,6 @@ public class UnitBase : MonoBehaviour
     public UnitBase curTarget;
     public bool isMyUnit = true;
     public bool isAttack = false;
-    public bool isDead = false;
 
     public int curHP;
     public int maxHP;
@@ -45,7 +44,6 @@ public class UnitBase : MonoBehaviour
 
     void Start()
     {
-        isDead = false;
         ChangeState(walkState);
     }
 
@@ -57,9 +55,6 @@ public class UnitBase : MonoBehaviour
     public void ChangeState(IUnitState nextState)
     {
         currentState?.Exit();
-
-        if (isDead)
-            return;
         currentState = nextState;
         currentState?.Enter();
     }
@@ -132,22 +127,20 @@ public class UnitBase : MonoBehaviour
 
     public void TakeDMG(int dmg)
     {
-        if (curHP <= 0 || isDead) return;
+        if (curHP <= 0) return;
         curHP -= dmg;
         hpImg.UpdateBar(curHP, maxHP);
-        //ShowDamageText(damage);
 
         if (curHP <= 0)
         {
             ChangeState(deadState);
-
-            isDead = true;
+            StageManager.Instance.spawner.UnitDie(isMyUnit, this);
         }
     }
 
     public void HealHP(int amount)
     {
-        if (curHP <= 0 || isDead) return;
+        if (curHP <= 0) return;
         if (curHP + amount > maxHP)
             curHP = maxHP;
         else
@@ -158,6 +151,8 @@ public class UnitBase : MonoBehaviour
 
     public void LaunchArrow()
     {
+        if (curTarget == null)
+            return;
         weapon.LaunchArrow(gameObject, curTarget.transform.position, ATK, curTarget);
     }
 
