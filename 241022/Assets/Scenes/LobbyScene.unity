@@ -349,6 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 069c9e7b955abc144a0f28115e59c808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allStageData: {fileID: 11400000, guid: f92ec4a162b522c4b89a3c2c31825086, type: 2}
   selectedStage: 0
 --- !u!4 &128677795
 Transform:

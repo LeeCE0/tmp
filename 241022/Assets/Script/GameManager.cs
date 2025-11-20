@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        LoadStage(1);
+        //LoadStage(1);
 
     }
     public void GameStart()
